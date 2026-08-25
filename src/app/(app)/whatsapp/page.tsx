@@ -1,92 +1,266 @@
 'use client'
 
+import { useState, useEffect, useCallback } from 'react'
+
+const WHATSAPP_API = process.env.NEXT_PUBLIC_WHATSAPP_API_URL || 'http://localhost:3001'
+
+interface ConnectionState {
+  status: string
+  phone: string | null
+  hasQr: boolean
+}
+
 export default function WhatsAppPage() {
+  const [connection, setConnection] = useState<ConnectionState>({ status: 'disconnected', phone: null, hasQr: false })
+  const [qrCode, setQrCode] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [testPhone, setTestPhone] = useState('')
+  const [testMessage, setTestMessage] = useState('')
+  const [sending, setSending] = useState(false)
+  const [sendResult, setSendResult] = useState('')
+
+  const checkStatus = useCallback(async () => {
+    try {
+      const res = await fetch(`${WHATSAPP_API}/api/status`)
+      const data = await res.json()
+      setConnection(data)
+    } catch {
+      setConnection({ status: 'offline', phone: null, hasQr: false })
+    }
+  }, [])
+
+  const fetchQr = useCallback(async () => {
+    try {
+      const res = await fetch(`${WHATSAPP_API}/api/qr`)
+      const data = await res.json()
+      if (data.qr) {
+        setQrCode(data.qr)
+      }
+    } catch {
+      // ignore
+    }
+  }, [])
+
+  useEffect(() => {
+    checkStatus()
+    const interval = setInterval(checkStatus, 3000)
+    return () => clearInterval(interval)
+  }, [checkStatus])
+
+  useEffect(() => {
+    if (connection.status === 'qr_ready') {
+      fetchQr()
+      const interval = setInterval(fetchQr, 2000)
+      return () => clearInterval(interval)
+    }
+    if (connection.status === 'connected') {
+      setQrCode(null)
+    }
+  }, [connection.status, fetchQr])
+
+  async function handleConnect() {
+    setLoading(true)
+    setError('')
+    try {
+      const res = await fetch(`${WHATSAPP_API}/api/connect`, { method: 'POST' })
+      const data = await res.json()
+      if (!data.success) {
+        setError(data.error || 'Erro ao conectar')
+      }
+    } catch {
+      setError('Não foi possível conectar ao servidor. Verifique se o backend está rodando.')
+    }
+    setLoading(false)
+  }
+
+  async function handleDisconnect() {
+    try {
+      await fetch(`${WHATSAPP_API}/api/disconnect`, { method: 'POST' })
+      setQrCode(null)
+      setConnection({ status: 'disconnected', phone: null, hasQr: false })
+    } catch {
+      setError('Erro ao desconectar')
+    }
+  }
+
+  async function handleSendTest() {
+    if (!testPhone || !testMessage) return
+    setSending(true)
+    setSendResult('')
+    try {
+      const res = await fetch(`${WHATSAPP_API}/api/send`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: testPhone, message: testMessage }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setSendResult('Mensagem enviada com sucesso!')
+        setTestMessage('')
+      } else {
+        setSendResult(`Erro: ${data.error}`)
+      }
+    } catch {
+      setSendResult('Erro ao enviar mensagem')
+    }
+    setSending(false)
+  }
+
+  function renderQrCode() {
+    if (!qrCode) return null
+
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(qrCode)}`
+
+    return (
+      <div className="flex flex-col items-center gap-4">
+        <p className="text-sm text-gray-600">Escaneie o QR Code com seu WhatsApp</p>
+        <div className="bg-white p-4 rounded-xl border-2 border-gray-200 shadow-sm">
+          <img src={qrUrl} alt="QR Code WhatsApp" className="w-64 h-64" />
+        </div>
+        <p className="text-xs text-gray-400">WhatsApp → Menu → Dispositivos conectados → Conectar dispositivo</p>
+      </div>
+    )
+  }
+
+  function getStatusDisplay() {
+    switch (connection.status) {
+      case 'connected':
+        return { text: 'Conectado', color: 'green', icon: '✅' }
+      case 'qr_ready':
+        return { text: 'Aguardando leitura do QR Code', color: 'yellow', icon: '📱' }
+      case 'connecting':
+        return { text: 'Conectando...', color: 'blue', icon: '🔄' }
+      case 'disconnected':
+        return { text: 'Desconectado', color: 'gray', icon: '⚪' }
+      case 'logged_out':
+        return { text: 'Desconectado (logout)', color: 'red', icon: '🔴' }
+      case 'offline':
+        return { text: 'Backend offline', color: 'red', icon: '⚠️' }
+      default:
+        return { text: connection.status, color: 'gray', icon: '❓' }
+    }
+  }
+
+  const statusDisplay = getStatusDisplay()
+
   return (
     <div className="max-w-3xl mx-auto space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">WhatsApp</h1>
-        <div className="mt-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-yellow-50 text-yellow-700 text-sm font-medium rounded-full">
-            <span className="w-2 h-2 rounded-full bg-yellow-500" />
-            Integração em desenvolvimento
-          </span>
-        </div>
+        <p className="text-gray-500 mt-1">Conecte seu WhatsApp para receber notificações de vagas.</p>
       </div>
 
       <div className="bg-white rounded-xl border border-gray-100 p-6">
-        <p className="text-gray-600 leading-relaxed">
-          Em breve você receberá suas vagas diretamente no WhatsApp. Estamos trabalhando para tornar a integração rápida e segura.
-        </p>
-      </div>
-
-      <div className="flex justify-center">
-        <div className="w-80 bg-[#ECE5DD] rounded-3xl overflow-hidden shadow-xl border-4 border-gray-800">
-          <div className="bg-[#075E54] px-4 py-3 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-green-500 flex items-center justify-center text-white font-bold text-sm">
-              VZ
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-lg font-bold text-gray-900">Status da Conexão</h2>
+            <div className="flex items-center gap-2 mt-1">
+              <span className={`w-2.5 h-2.5 rounded-full ${
+                statusDisplay.color === 'green' ? 'bg-green-500' :
+                statusDisplay.color === 'yellow' ? 'bg-yellow-500 animate-pulse' :
+                statusDisplay.color === 'blue' ? 'bg-blue-500 animate-spin' :
+                statusDisplay.color === 'red' ? 'bg-red-500' : 'bg-gray-300'
+              }`} />
+              <span className="text-sm text-gray-600">{statusDisplay.icon} {statusDisplay.text}</span>
             </div>
-            <div>
-              <p className="text-white font-semibold text-sm">VagaZaps</p>
-              <p className="text-green-200 text-xs">online</p>
-            </div>
+            {connection.phone && (
+              <p className="text-xs text-gray-400 mt-1">Telefone: {connection.phone}</p>
+            )}
           </div>
 
-          <div className="px-3 py-4 space-y-3 min-h-[320px]">
-            <div className="flex justify-center">
-              <span className="text-[10px] text-gray-500 bg-white/70 px-2 py-0.5 rounded-full">
-                HOJE
-              </span>
-            </div>
-
-            <div className="flex">
-              <div className="bg-white rounded-lg px-3 py-2 max-w-[85%] shadow-sm">
-                <p className="text-sm text-gray-800">🚨 Nova vaga encontrada!</p>
-                <p className="text-[10px] text-gray-400 text-right mt-1">09:30</p>
-              </div>
-            </div>
-
-            <div className="flex">
-              <div className="bg-white rounded-lg px-3 py-2 max-w-[85%] shadow-sm">
-                <p className="text-sm text-gray-800 font-medium">Analista de Suporte TI</p>
-                <p className="text-sm text-gray-600 mt-1">
-                  📍 Rondonópolis - MT<br />
-                  💰 R$3.000
-                </p>
-                <p className="text-sm text-gray-800 mt-2">
-                  Compatibilidade: <span className="text-green-600 font-bold">94%</span>
-                </p>
-                <p className="text-[10px] text-gray-400 text-right mt-1">09:30</p>
-              </div>
-            </div>
-
-            <div className="flex">
-              <div className="bg-white rounded-lg px-3 py-2 max-w-[85%] shadow-sm">
-                <p className="text-sm text-gray-800">
-                  👉 Ver vaga:{' '}
-                  <span className="text-blue-600 underline">Abrir oportunidade</span>
-                </p>
-                <p className="text-[10px] text-gray-400 text-right mt-1">09:31</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white px-3 py-2.5 flex items-center gap-2 border-t border-gray-200">
-            <div className="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm text-gray-400">
-              Digite uma mensagem...
-            </div>
-            <div className="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center text-gray-400">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-              </svg>
-            </div>
+          <div className="flex gap-2">
+            {connection.status !== 'connected' && connection.status !== 'qr_ready' ? (
+              <button
+                onClick={handleConnect}
+                disabled={loading || connection.status === 'connecting'}
+                className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                {loading ? 'Conectando...' : 'Conectar WhatsApp'}
+              </button>
+            ) : (
+              <button
+                onClick={handleDisconnect}
+                className="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors"
+              >
+                Desconectar
+              </button>
+            )}
           </div>
         </div>
+
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
+            <p className="text-sm text-red-700">{error}</p>
+          </div>
+        )}
+
+        {connection.status === 'qr_ready' && renderQrCode()}
+
+        {connection.status === 'connected' && (
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+            <p className="text-sm text-green-800 font-medium">WhatsApp conectado com sucesso!</p>
+            <p className="text-sm text-green-700 mt-1">Você receberá notificações de vagas compatíveis no seu WhatsApp.</p>
+          </div>
+        )}
       </div>
 
-      <div className="bg-gray-50 rounded-xl p-5 text-center">
-        <p className="text-sm text-gray-500">
-          Esta é uma simulação. A integração real com WhatsApp será disponibilizada em breve.
-        </p>
+      {connection.status === 'connected' && (
+        <div className="bg-white rounded-xl border border-gray-100 p-6">
+          <h2 className="text-lg font-bold text-gray-900 mb-4">Testar Envio</h2>
+          <div className="space-y-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+              <input
+                type="tel"
+                value={testPhone}
+                onChange={(e) => setTestPhone(e.target.value)}
+                placeholder="5511999999999"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
+              <textarea
+                value={testMessage}
+                onChange={(e) => setTestMessage(e.target.value)}
+                placeholder="Olá! Esta é uma mensagem de teste do VagaZaps."
+                rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              />
+            </div>
+            <button
+              onClick={handleSendTest}
+              disabled={sending || !testPhone || !testMessage}
+              className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {sending ? 'Enviando...' : 'Enviar mensagem de teste'}
+            </button>
+            {sendResult && (
+              <p className={`text-sm ${sendResult.includes('sucesso') ? 'text-green-600' : 'text-red-600'}`}>
+                {sendResult}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div className="bg-white rounded-xl border border-gray-100 p-6">
+        <h2 className="text-lg font-bold text-gray-900 mb-3">Como funciona</h2>
+        <div className="space-y-3 text-sm text-gray-600">
+          <div className="flex items-start gap-3">
+            <span className="text-lg">1️⃣</span>
+            <p>Clique em <strong>Conectar WhatsApp</strong> para iniciar a conexão</p>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-lg">2️⃣</span>
+            <p>Escaneie o <strong>QR Code</strong> que aparecerá usando seu WhatsApp</p>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-lg">3️⃣</span>
+            <p>Pronto! Você receberá notificações de vagas automaticamente</p>
+          </div>
+        </div>
       </div>
     </div>
   )
