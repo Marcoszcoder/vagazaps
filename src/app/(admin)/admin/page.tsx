@@ -39,6 +39,8 @@ export default function AdminPage() {
   const [qrCode, setQrCode] = useState<string | null>(null)
   const [whatsappLoading, setWhatsappLoading] = useState(false)
   const [whatsappError, setWhatsappError] = useState('')
+  const [sending, setSending] = useState(false)
+  const [sendResult, setSendResult] = useState('')
 
   const checkStatus = useCallback(async () => {
     try {
@@ -121,6 +123,44 @@ export default function AdminPage() {
       default:
         return { text: connection.status, color: 'gray', icon: '❓' }
     }
+  }
+
+  async function handleSendTest() {
+    setSending(true)
+    setSendResult('')
+    const allUsrs = getAllUsers()
+    const withPhone = allUsrs.filter(u => u.phone && u.phone.length >= 13)
+
+    if (withPhone.length === 0) {
+      setSendResult('Nenhum usuário com número de WhatsApp cadastrado.')
+      setSending(false)
+      return
+    }
+
+    let sent = 0
+    let failed = 0
+
+    for (const u of withPhone) {
+      try {
+        const res = await fetch('/api/whatsapp-send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phone: u.phone,
+            message: `Olá, ${u.name}! 👋\n\nBem-vindo ao *VagaZaps*!\n\nEstamos analisando seu perfil e em instantes você receberá as primeiras vagas compatíveis com o que você procura.\n\nFique de olho no seu WhatsApp! 📲`
+          }),
+        })
+        const data = await res.json()
+        if (data.success) sent++
+        else failed++
+        await new Promise(r => setTimeout(r, 2000))
+      } catch {
+        failed++
+      }
+    }
+
+    setSendResult(`Enviado: ${sent} | Falhou: ${failed} | Total: ${withPhone.length} números`)
+    setSending(false)
   }
 
   if (authLoading) return <LoadingSpinner text="Carregando painel..." />
@@ -206,7 +246,7 @@ export default function AdminPage() {
           </div>
         )}
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           {connection.status !== 'connected' && connection.status !== 'qr_ready' ? (
             <button
               onClick={handleConnect}
@@ -223,7 +263,22 @@ export default function AdminPage() {
               Desconectar
             </button>
           )}
+          {connection.status === 'connected' && (
+            <button
+              onClick={handleSendTest}
+              disabled={sending}
+              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {sending ? 'Enviando...' : '📤 Enviar mensagem para todos'}
+            </button>
+          )}
         </div>
+
+        {sendResult && (
+          <div className="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <p className="text-sm text-blue-700">{sendResult}</p>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
