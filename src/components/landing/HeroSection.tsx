@@ -282,7 +282,7 @@ export default function HeroSection() {
           </div>
 
           {/* Left phone - jobs list */}
-          <div className="relative z-0 scale-[0.85]">
+          <div className="relative z-0 scale-[0.85] -mr-6">
             <div className="rounded-[2.5rem] bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 p-[2px] shadow-xl shadow-black/10">
               <div className="rounded-[2.3rem] bg-slate-800 p-[2px]">
                 <div className="relative rounded-[2.1rem] overflow-hidden bg-[#111b21]">
@@ -374,7 +374,7 @@ export default function HeroSection() {
           </div>
 
           {/* Right phone - notifications */}
-          <div className="relative z-0 scale-[0.85]">
+          <div className="relative z-0 scale-[0.85] -ml-6">
             <div className="rounded-[2.5rem] bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 p-[2px] shadow-xl shadow-black/10">
               <div className="rounded-[2.3rem] bg-slate-800 p-[2px]">
                 <div className="relative rounded-[2.1rem] overflow-hidden bg-[#111b21]">
