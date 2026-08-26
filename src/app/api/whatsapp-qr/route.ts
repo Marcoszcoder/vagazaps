@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-const WHATSAPP_API = process.env.NEXT_PUBLIC_WHATSAPP_API || 'https://vagazaps-whatsapp.onrender.com'
+const WHATSAPP_API = process.env.NEXT_PUBLIC_WHATSAPP_API || 'https://nodejs-production-5edf4.up.railway.app'
 
 export async function GET() {
   try {

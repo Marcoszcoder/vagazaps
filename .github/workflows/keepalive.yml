@@ -11,5 +11,5 @@ jobs:
     steps:
       - name: Ping WhatsApp Backend
         run: |
-          curl -s https://vagazaps-whatsapp.onrender.com/health || echo "Ping failed"
-          curl -s https://vagazaps-whatsapp.onrender.com/api/status || echo "Status failed"
+          curl -s https://nodejs-production-5edf4.up.railway.app/health || echo "Ping failed"
+          curl -s https://nodejs-production-5edf4.up.railway.app/api/status || echo "Status failed"
