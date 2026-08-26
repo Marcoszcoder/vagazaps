@@ -239,8 +239,9 @@ export default function HeroSection() {
     <section className="bg-white py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <span className="relative mb-4 inline-block rounded-full bg-gradient-to-r from-[#22c55e] to-[#86efac] px-4 py-1 text-[11px] font-bold tracking-wide text-white shadow-sm">
+          <span className="relative mb-4 inline-block overflow-hidden rounded-full bg-gradient-to-r from-[#22c55e] to-[#86efac] px-4 py-1 text-[11px] font-bold tracking-wide text-white shadow-sm">
             <span className="relative z-10">Robô automático</span>
+            <span className="absolute inset-0 -translate-x-full animate-[shine_3s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
           </span>
           <h1
             className="text-[32px] leading-[40px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[52px] lg:leading-[65px]"
@@ -260,9 +261,10 @@ export default function HeroSection() {
           <div className="mt-8 flex flex-row items-center justify-center gap-3">
             <Link
               href="/cadastro"
-              className="inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#22c55e] to-[#4ade80] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#22c55e]/30 md:px-7 md:py-3 md:text-base"
+              className="relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#22c55e] to-[#4ade80] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#22c55e]/30 md:px-7 md:py-3 md:text-base"
             >
               <span className="relative z-10">Ativar Alerta</span>
+              <span className="absolute inset-0 -translate-x-full animate-[shine_3s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             </Link>
             <a
               href="#como-funciona"
