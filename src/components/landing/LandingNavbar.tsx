@@ -8,8 +8,9 @@ export default function LandingNavbar() {
     <nav className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/iconezaps.png" alt="VagaZaps" width={32} height={32} className="rounded-lg" />
-          <span className="text-xl font-bold text-[#16a34a]">VagaZaps</span>
+          <Image src="/iconezaps.png" alt="VagaZaps" width={36} height={36} className="rounded-lg hidden md:block" />
+          <Image src="/iconezaps.png" alt="VagaZaps" width={32} height={32} className="rounded-lg md:hidden" />
+          <span className="text-xl font-bold text-[#16a34a] md:text-2xl">VagaZaps</span>
         </Link>
 
         {/* Desktop nav */}

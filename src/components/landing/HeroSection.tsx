@@ -243,7 +243,7 @@ export default function HeroSection() {
             <span className="relative z-10">Robô automático</span>
           </span>
           <h1
-            className="text-[32px] leading-[40px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[49px] lg:leading-[62px]"
+            className="text-[32px] leading-[40px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[52px] lg:leading-[65px]"
             style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 800 }}
           >
             Pare de <span className="text-[#0f172a]">perder</span> vagas
@@ -254,18 +254,19 @@ export default function HeroSection() {
             className="mx-auto mt-5 max-w-2xl lg:mx-auto"
             style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 400, fontSize: '14px', lineHeight: '24px', color: 'lab(48.496 0 0)' }}
           >
-            Você já perdeu vagas incríveis por não conseguir acompanhar dezenas de sites de emprego? Enquanto você cuida da sua rotina, novas oportunidades continuam surgindo. Nosso robô fica de olho por você e envia as vagas direto no seu WhatsApp.
+            <span className="hidden lg:inline text-[17px]">Você já perdeu vagas incríveis por não conseguir acompanhar dezenas de sites de emprego? Enquanto você cuida da sua rotina, novas oportunidades continuam surgindo. Nosso robô fica de olho por você e envia as vagas direto no seu WhatsApp.</span>
+            <span className="lg:hidden">Você já perdeu vagas incríveis por não conseguir acompanhar dezenas de sites de emprego? Enquanto você cuida da sua rotina, novas oportunidades continuam surgindo. Nosso robô fica de olho por você e envia as vagas direto no seu WhatsApp.</span>
           </p>
           <div className="mt-8 flex flex-row items-center justify-center gap-3">
             <Link
               href="/cadastro"
-              className="inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#22c55e] to-[#4ade80] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#22c55e]/30"
+              className="inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#22c55e] to-[#4ade80] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#22c55e]/30 md:px-7 md:py-3 md:text-base"
             >
               <span className="relative z-10">Ativar Alerta</span>
             </Link>
             <a
               href="#como-funciona"
-              className="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium text-slate-500 transition-colors hover:text-slate-800"
+              className="hidden md:inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-base font-medium text-slate-500 transition-colors hover:text-slate-800"
             >
               <span className="relative z-10">Ver como funciona</span>
             </a>
