@@ -10,7 +10,7 @@ export default function LandingNavbar() {
         <Link href="/" className="flex items-center gap-2 pl-3">
           <Image src="/iconezaps.png" alt="VagaZaps" width={36} height={36} className="rounded-lg hidden md:block" />
           <Image src="/iconezaps.png" alt="VagaZaps" width={32} height={32} className="rounded-lg md:hidden" />
-          <span className="text-xl font-bold text-[#16a34a] md:text-2xl">VagaZaps</span>
+          <span className="bg-gradient-to-r from-[#16a34a] via-[#22c55e] to-[#4ade80] bg-clip-text text-xl font-bold text-transparent md:text-2xl">VagaZaps</span>
         </Link>
 
         {/* Desktop nav */}
