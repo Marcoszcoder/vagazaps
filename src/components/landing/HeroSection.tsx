@@ -7,8 +7,9 @@ export default function HeroSection() {
     <section className="bg-white py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <span className="inline-block rounded-full border border-[#16a34a]/30 bg-[#16a34a]/10 px-4 py-1 text-xs font-semibold tracking-wide text-[#16a34a]">
-            🤖 Robô automático
+          <span className="relative mb-4 inline-block overflow-hidden rounded-full bg-gradient-to-r from-[#15803d] to-[#4ade80] px-5 py-1.5 text-xs font-bold tracking-wide text-white shadow-sm">
+            <span className="relative z-10">Robô automático</span>
+            <span className="absolute inset-0 -translate-x-full animate-[shine_2.5s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
           </span>
           <h1
             className="text-[32px] leading-[40px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[60px] lg:leading-[75px]"
@@ -27,18 +28,20 @@ export default function HeroSection() {
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/cadastro"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#16a34a] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#15803d]"
+              className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#15803d] to-[#16a34a] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#16a34a]/30"
             >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <span className="absolute inset-0 -translate-x-full group-hover:animate-[shine_0.6s_ease-in-out] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+              <svg className="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
-              Ativar Alerta
+              <span className="relative z-10">Ativar Alerta</span>
             </Link>
             <a
               href="#como-funciona"
-              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#16a34a] px-6 py-2.5 text-sm font-semibold text-[#16a34a] transition-all hover:bg-[#16a34a] hover:text-white"
+              className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border-2 border-[#16a34a] px-6 py-2.5 text-sm font-semibold text-[#16a34a] transition-all hover:bg-[#16a34a] hover:text-white"
             >
-              Ver como funciona
+              <span className="absolute inset-0 -translate-x-full group-hover:animate-[shine_0.6s_ease-in-out] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+              <span className="relative z-10">Ver como funciona</span>
             </a>
           </div>
         </div>
