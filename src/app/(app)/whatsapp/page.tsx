@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useJobs } from '@/contexts/JobsContext'
 import { useWhatsAppMessages } from '@/hooks/useWhatsAppMessages'
@@ -11,7 +11,7 @@ export default function WhatsAppPage() {
   const { startMessageFlow } = useWhatsAppMessages()
   const [phone, setPhone] = useState(user?.phone || '')
   const [saved, setSaved] = useState(false)
-  const [sending, setSending] = useState(false)
+  const [status, setStatus] = useState('')
   const [error, setError] = useState('')
 
   function formatPhone(value: string): string {
@@ -27,6 +27,7 @@ export default function WhatsAppPage() {
     setPhone(formatted)
     setSaved(false)
     setError('')
+    setStatus('')
   }
 
   async function handleSave() {
@@ -40,11 +41,17 @@ export default function WhatsAppPage() {
     updateUser({ phone: fullPhone })
     setSaved(true)
     setError('')
+    setStatus('Enviando mensagem de boas-vindas...')
 
-    if (user && jobs.length > 0) {
-      setSending(true)
+    if (user) {
       startMessageFlow(fullPhone, user.name, jobs)
-      setTimeout(() => setSending(false), 3000)
+      setTimeout(() => {
+        if (jobs.length > 0) {
+          setStatus(`Mensagem enviada! Primeira vaga em 2 minutos. Depois a cada 5 minutos.`)
+        } else {
+          setStatus(`Mensagem de boas-vindas enviada! Vagas serão enviadas quando estiverem disponíveis.`)
+        }
+      }, 3000)
     }
   }
 
@@ -74,12 +81,9 @@ export default function WhatsAppPage() {
           </div>
         )}
 
-        {saved && (
-          <div className="bg-green-50 border border-green-200 rounded-lg p-3 space-y-1">
-            <p className="text-sm text-green-700 font-medium">Número salvo com sucesso!</p>
-            {sending && (
-              <p className="text-xs text-green-600">Enviando mensagem de boas-vindas...</p>
-            )}
+        {saved && status && (
+          <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+            <p className="text-sm text-green-700 font-medium">{status}</p>
           </div>
         )}
 
@@ -100,11 +104,15 @@ export default function WhatsAppPage() {
           </div>
           <div className="flex items-start gap-3">
             <span className="text-lg">2️⃣</span>
-            <p>Nossa equipe enviará vagas <strong>compatíveis com seu perfil</strong></p>
+            <p>Você receberá uma <strong>mensagem de boas-vindas</strong></p>
           </div>
           <div className="flex items-start gap-3">
             <span className="text-lg">3️⃣</span>
-            <p>Você receberá as vagas <strong>direto no WhatsApp</strong></p>
+            <p>Em <strong>2 minutos</strong> chega a primeira vaga</p>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-lg">4️⃣</span>
+            <p><strong>A cada 5 minutos</strong> novas vagas compatíveis</p>
           </div>
         </div>
       </div>

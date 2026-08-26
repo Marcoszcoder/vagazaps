@@ -1,16 +1,18 @@
 const WHATSAPP_API = process.env.NEXT_PUBLIC_WHATSAPP_API || 'https://vagazaps-whatsapp.onrender.com'
 
-export async function sendWhatsAppMessage(phone: string, message: string): Promise<{ success: boolean; messageId?: string }> {
+export async function sendWhatsAppMessage(phone: string, message: string): Promise<{ success: boolean; messageId?: string; error?: string }> {
   try {
-    const res = await fetch(`${WHATSAPP_API}/api/send`, {
+    const res = await fetch('/api/whatsapp-send', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ phone, message }),
     })
     const data = await res.json()
+    console.log(`[WhatsApp] Sent to ${phone}: success=${data.success}`, data.error || '')
     return data
-  } catch {
-    return { success: false }
+  } catch (err) {
+    console.error('[WhatsApp] Fetch error:', err)
+    return { success: false, error: 'Network error' }
   }
 }
 
