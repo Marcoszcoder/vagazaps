@@ -261,9 +261,6 @@ export default function HeroSection() {
               href="/cadastro"
               className="inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#22c55e] to-[#4ade80] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#22c55e]/30"
             >
-              <svg className="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
               <span className="relative z-10">Ativar Alerta</span>
             </Link>
             <a

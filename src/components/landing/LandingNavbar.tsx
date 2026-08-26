@@ -39,10 +39,10 @@ export default function LandingNavbar() {
 
         {/* Mobile buttons */}
         <div className="flex items-center gap-3 md:hidden">
-          <Link href="/login" className="text-sm font-medium text-slate-500 transition-colors hover:text-slate-800">
+          <Link href="/login" className="text-base font-medium text-slate-500 transition-colors hover:text-slate-800">
             Entrar
           </Link>
-          <Link href="/cadastro" className="text-sm font-semibold text-[#16a34a] transition-colors hover:text-[#15803d]">
+          <Link href="/cadastro" className="rounded-full bg-gradient-to-r from-[#22c55e] to-[#4ade80] px-4 py-1.5 text-base font-semibold text-white shadow-sm transition-all hover:shadow-md">
             Ativar
           </Link>
         </div>
