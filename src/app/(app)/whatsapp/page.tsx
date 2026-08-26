@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 
-const WHATSAPP_API = process.env.NEXT_PUBLIC_WHATSAPP_API_URL || 'http://localhost:3001'
+const WHATSAPP_API = process.env.NEXT_PUBLIC_WHATSAPP_API_URL || 'https://vagazaps-whatsapp.onrender.com'
 
 interface ConnectionState {
   status: string
