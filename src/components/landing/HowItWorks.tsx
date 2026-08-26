@@ -88,7 +88,7 @@ export default function HowItWorks() {
 
         <div className="mt-12 text-center">
           <Link
-            href="/cadastro"
+            href="#planos"
             className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#22c55e] to-[#4ade80] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#22c55e]/30"
           >
             Começar agora
