@@ -10,7 +10,7 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import { getAllUsers } from '@/lib/mock/users'
 import { getAllSources } from '@/lib/mock/sources'
 
-const WHATSAPP_API = 'https://vagazaps-whatsapp.onrender.com'
+const WHATSAPP_API = ''
 
 interface ConnectionState {
   status: string
@@ -44,7 +44,7 @@ export default function AdminPage() {
 
   const checkStatus = useCallback(async () => {
     try {
-      const res = await fetch(`${WHATSAPP_API}/api/status`)
+      const res = await fetch('/api/whatsapp-status')
       const data = await res.json()
       setConnection(data)
     } catch {
@@ -54,7 +54,7 @@ export default function AdminPage() {
 
   const fetchQr = useCallback(async () => {
     try {
-      const res = await fetch(`${WHATSAPP_API}/api/qr`)
+      const res = await fetch('/api/whatsapp-qr')
       const data = await res.json()
       if (data.qr) {
         setQrCode(data.qr)
@@ -85,7 +85,7 @@ export default function AdminPage() {
     setWhatsappLoading(true)
     setWhatsappError('')
     try {
-      const res = await fetch(`${WHATSAPP_API}/api/connect`, { method: 'POST' })
+      const res = await fetch('/api/whatsapp-connect', { method: 'POST' })
       const data = await res.json()
       if (!data.success) {
         setWhatsappError(data.error || 'Erro ao conectar')
@@ -98,7 +98,7 @@ export default function AdminPage() {
 
   async function handleDisconnect() {
     try {
-      await fetch(`${WHATSAPP_API}/api/disconnect`, { method: 'POST' })
+      await fetch('/api/whatsapp-disconnect', { method: 'POST' })
       setQrCode(null)
       setConnection({ status: 'disconnected', phone: null, hasQr: false })
     } catch {
