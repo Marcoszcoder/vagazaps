@@ -249,7 +249,7 @@ export default function HeroSection() {
           >
             Pare de <span className="text-[#0f172a]">perder</span> vagas
             <br />
-            que poderiam mudar sua <span className="text-[#16a34a]">vida</span>.
+            que poderiam mudar sua <span className="bg-gradient-to-r from-[#16a34a] via-[#22c55e] to-[#4ade80] bg-clip-text text-transparent" style={{ WebkitTextFillColor: 'transparent' }}>vida</span>.
           </h1>
           <p
             className="mx-auto mt-5 max-w-2xl lg:mx-auto"
