@@ -24,19 +24,19 @@ export default function HeroSection() {
           >
             Você já perdeu vagas incríveis por não conseguir acompanhar dezenas de sites de emprego? Enquanto você cuida da sua rotina, novas oportunidades continuam surgindo. Nosso robô fica de olho por você e envia as vagas direto no seu WhatsApp.
           </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/cadastro"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#16a34a] px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#15803d] sm:w-auto"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#16a34a] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#15803d]"
             >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
-              Começar agora — é grátis
+              Ativar Alerta
             </Link>
             <a
               href="#como-funciona"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-[#16a34a] px-5 py-2.5 text-sm font-semibold text-[#16a34a] transition-all hover:bg-[#16a34a] hover:text-white sm:w-auto"
+              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#16a34a] px-6 py-2.5 text-sm font-semibold text-[#16a34a] transition-all hover:bg-[#16a34a] hover:text-white"
             >
               Ver como funciona
             </a>
