@@ -1,0 +1,15 @@
+name: Keep WhatsApp Alive
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping WhatsApp Backend
+        run: |
+          curl -s https://vagazaps-whatsapp.onrender.com/health || echo "Ping failed"
+          curl -s https://vagazaps-whatsapp.onrender.com/api/status || echo "Status failed"
