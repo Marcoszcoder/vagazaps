@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useJobs } from '@/contexts/JobsContext'
 import JobCard from '@/components/ui/JobCard'
 import EmptyState from '@/components/ui/EmptyState'
@@ -44,8 +44,10 @@ const SORT_OPTIONS = [
 ]
 
 export default function VagasPage() {
-  const { jobs, loading, filterJobsList, getJobMatch } = useJobs()
+  const { jobs, loading, filterJobsList, getJobMatch, refreshJobs } = useJobs()
   const [showFilters, setShowFilters] = useState(false)
+  const [collecting, setCollecting] = useState(false)
+  const [collectResult, setCollectResult] = useState<string | null>(null)
 
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
@@ -54,6 +56,28 @@ export default function VagasPage() {
   const [experience, setExperience] = useState<ExperienceLevel | ''>('')
   const [salaryMin, setSalaryMin] = useState('')
   const [sortBy, setSortBy] = useState<'recent' | 'salary' | 'match'>('recent')
+
+  useEffect(() => {
+    if (jobs.length === 0 && !loading) {
+      handleCollect()
+    }
+  }, [])
+
+  async function handleCollect() {
+    setCollecting(true)
+    setCollectResult(null)
+    try {
+      const res = await fetch('/api/collect', { method: 'POST' })
+      const data = await res.json()
+      if (data.success) {
+        setCollectResult(`${data.newJobs} novas vagas coletadas de ${data.results?.length || 0} fontes`)
+        refreshJobs()
+      }
+    } catch {
+      setCollectResult('Erro ao coletar vagas')
+    }
+    setCollecting(false)
+  }
 
   const activeFiltersCount = [city, state, workMode, contractType, experience, salaryMin].filter(Boolean).length
 
@@ -213,6 +237,20 @@ export default function VagasPage() {
         </div>
       </div>
 
+      {collecting && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-center gap-3">
+          <span className="animate-spin text-blue-600">⏳</span>
+          <p className="text-sm text-blue-700">Coletando vagas dos sites...</p>
+        </div>
+      )}
+
+      {collectResult && !collecting && (
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center justify-between">
+          <p className="text-sm text-green-700">{collectResult}</p>
+          <button onClick={() => setCollectResult(null)} className="text-green-600 hover:text-green-800 text-sm">✕</button>
+        </div>
+      )}
+
       <p className="text-sm text-gray-500">
         <span className="font-semibold text-gray-900">{filteredJobs.length}</span> vagas encontradas
       </p>
@@ -223,6 +261,13 @@ export default function VagasPage() {
             <JobCard key={job.id} job={job} matchResult={getJobMatch(job)} />
           ))}
         </div>
+      ) : jobs.length === 0 && !collecting ? (
+        <EmptyState
+          icon="📋"
+          title="Nenhuma vaga coletada ainda"
+          description="Clique abaixo para buscar vagas reais no Empregos.com.br e Catho."
+          action={{ label: '🔍 Buscar vagas agora', onClick: handleCollect }}
+        />
       ) : (
         <EmptyState
           icon="🔍"

@@ -3,24 +3,24 @@ import { JobSource } from '../types'
 const sources: JobSource[] = [
   {
     id: 'src-001',
-    name: 'InfoJobs Mock',
+    name: 'Empregos.com.br',
     status: 'active',
-    lastSync: '2025-06-01T08:00:00Z',
-    type: 'mock',
+    lastSync: new Date().toISOString(),
+    type: 'scraping',
   },
   {
     id: 'src-002',
-    name: 'VagasBR Mock',
+    name: 'Catho',
     status: 'active',
-    lastSync: '2025-06-01T07:30:00Z',
-    type: 'mock',
+    lastSync: new Date().toISOString(),
+    type: 'scraping',
   },
   {
     id: 'src-003',
-    name: 'Empregos.com Mock',
-    status: 'inactive',
-    lastSync: '2025-05-15T12:00:00Z',
-    type: 'mock',
+    name: 'Gupy',
+    status: 'active',
+    lastSync: new Date().toISOString(),
+    type: 'scraping',
   },
 ]
 
