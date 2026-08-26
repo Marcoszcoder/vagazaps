@@ -255,8 +255,8 @@ export default function HeroSection() {
             className="mx-auto mt-5 max-w-2xl lg:mx-auto"
             style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 400, fontSize: '14px', lineHeight: '24px', color: 'lab(48.496 0 0)' }}
           >
-            <span className="hidden lg:inline text-[17px]">Você já perdeu vagas incríveis por não conseguir acompanhar dezenas de sites de emprego? Enquanto você cuida da sua rotina, novas oportunidades continuam surgindo. Nosso robô fica de olho por você e envia as vagas direto no seu WhatsApp.</span>
-            <span className="lg:hidden">Você já perdeu vagas incríveis por não conseguir acompanhar dezenas de sites de emprego? Enquanto você cuida da sua rotina, novas oportunidades continuam surgindo. Nosso robô fica de olho por você e envia as vagas direto no seu WhatsApp.</span>
+            <span className="hidden lg:inline text-[17px]">Você já perdeu vagas incríveis por não conseguir acompanhar dezenas de sites de emprego? Novas oportunidades continuam surgindo. Nosso robô fica de olho por você e envia as vagas direto no seu WhatsApp.</span>
+            <span className="lg:hidden">Você já perdeu vagas incríveis por não conseguir acompanhar dezenas de sites de emprego? Novas oportunidades continuam surgindo. Nosso robô fica de olho por você e envia as vagas direto no seu WhatsApp.</span>
           </p>
           <div className="mt-8 flex flex-row items-center justify-center gap-3">
             <Link
