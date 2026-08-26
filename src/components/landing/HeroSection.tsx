@@ -11,7 +11,7 @@ export default function HeroSection() {
             <span className="relative z-10">Robô automático</span>
           </span>
           <h1
-            className="text-[32px] leading-[40px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[58px] lg:leading-[73px]"
+            className="text-[32px] leading-[40px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[56px] lg:leading-[70px]"
             style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 800 }}
           >
             Pare de <span className="text-[#ef4444]">perder</span> vagas
