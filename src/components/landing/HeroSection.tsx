@@ -258,7 +258,7 @@ export default function HeroSection() {
             <span className="hidden lg:inline text-[17px]">Você já perdeu vagas incríveis por não conseguir acompanhar dezenas de sites de emprego? Novas oportunidades continuam surgindo. Nosso robô fica de olho por você e envia as vagas direto no seu WhatsApp.</span>
             <span className="lg:hidden">Você já perdeu vagas incríveis por não conseguir acompanhar dezenas de sites de emprego? Novas oportunidades continuam surgindo. Nosso robô fica de olho por você e envia as vagas direto no seu WhatsApp.</span>
           </p>
-          <div className="mt-8 flex flex-row items-center justify-center gap-3">
+          <div className="mt-8 flex flex-row items-center justify-center gap-1">
             <Link
               href="/cadastro"
               className="relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#22c55e] to-[#4ade80] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#22c55e]/30 md:px-7 md:py-3 md:text-base"
