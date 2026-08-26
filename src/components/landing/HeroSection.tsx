@@ -239,7 +239,7 @@ export default function HeroSection() {
     <section className="bg-white py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <span className="relative mb-4 inline-block rounded-full bg-gradient-to-r from-[#22c55e] to-[#86efac] px-5 py-1.5 text-xs font-bold tracking-wide text-white shadow-sm">
+          <span className="relative mb-4 inline-block rounded-full bg-gradient-to-r from-[#22c55e] to-[#86efac] px-4 py-1 text-[10px] font-bold tracking-wide text-white shadow-sm">
             <span className="relative z-10">Robô automático</span>
           </span>
           <h1
@@ -277,6 +277,28 @@ export default function HeroSection() {
 
         {/* Device mockups */}
         <div className="relative mt-16 flex items-end justify-center gap-6 lg:gap-10">
+          {/* Decorative background */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="h-[300px] w-[300px] rounded-full bg-[#22c55e]/5 blur-3xl lg:h-[400px] lg:w-[400px]" />
+          </div>
+          <div className="absolute top-10 left-[15%] pointer-events-none">
+            <div className="h-16 w-16 rounded-2xl border border-[#22c55e]/10 bg-[#22c55e]/5 rotate-12 blur-[1px]" />
+          </div>
+          <div className="absolute bottom-20 right-[12%] pointer-events-none">
+            <div className="h-12 w-12 rounded-full border border-[#22c55e]/10 bg-[#22c55e]/5 -rotate-6 blur-[1px]" />
+          </div>
+          <div className="absolute top-1/2 right-[8%] pointer-events-none hidden lg:block">
+            <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 shadow-sm">
+              <div className="h-2 w-2 rounded-full bg-[#22c55e] animate-pulse" />
+              <span className="text-[10px] font-medium text-slate-500">3 vagas hoje</span>
+            </div>
+          </div>
+          <div className="absolute top-1/3 left-[10%] pointer-events-none hidden lg:block">
+            <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 shadow-sm">
+              <svg className="h-3 w-3 text-[#22c55e]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span className="text-[10px] font-medium text-slate-500">92% match</span>
+            </div>
+          </div>
           <PhoneMockup />
           <LaptopMockup />
         </div>
