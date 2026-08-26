@@ -244,8 +244,8 @@ export default function HeroSection() {
             <span className="absolute inset-0 -translate-x-full animate-[shine_3s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
           </span>
           <h1
-            className="text-[29px] leading-[40px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[52px] lg:leading-[65px]"
-            style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 800 }}
+            className="text-[29px] leading-[36px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[46px] md:text-[50px] md:leading-[58px] lg:text-[52px] lg:leading-[60px]"
+            style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 800, letterSpacing: '-0.01em' }}
           >
             Pare de <span className="text-[#0f172a]">perder</span> vagas
             <br />
