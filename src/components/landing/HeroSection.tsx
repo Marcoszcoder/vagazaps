@@ -63,27 +63,6 @@ function PhoneMockup() {
                 </div>
               </div>
 
-              {/* Job 2 */}
-              <div className="max-w-[92%] rounded-lg rounded-tl-none bg-[#1d2e35] p-2.5">
-                <div className="flex items-center gap-1 mb-1">
-                  <span className="text-[7px]">🎉</span>
-                  <span className="text-[7px] font-bold text-[#22c55e]">NOVA VAGA ENCONTRADA</span>
-                </div>
-                <p className="text-[9px] font-bold text-white leading-tight">Analista de Marketing Digital</p>
-                <p className="text-[7px] text-slate-300 mt-0.5">📍 São Paulo — SP</p>
-                <p className="text-[7px] text-slate-300">💰 R$ 3.800 — R$ 5.200</p>
-                <p className="text-[6px] text-slate-500 mt-0.5">🏢 StartupX • CLT • Presencial</p>
-                <div className="mt-1.5 flex items-center gap-1.5">
-                  <div className="flex-1 h-1.5 rounded-full bg-slate-700/60 overflow-hidden">
-                    <div className="h-full rounded-full bg-gradient-to-r from-[#22c55e] to-[#4ade80]" style={{ width: '87%' }} />
-                  </div>
-                  <span className="text-[7px] font-bold text-[#22c55e]">87%</span>
-                </div>
-                <div className="mt-2 rounded-md bg-gradient-to-r from-[#22c55e] to-[#16a34a] px-2 py-1 text-center shadow-sm">
-                  <span className="text-[7px] font-bold text-white">VER VAGA →</span>
-                </div>
-              </div>
-
               {/* User reply */}
               <div className="max-w-[65%] ml-auto rounded-lg rounded-tr-none bg-[#005c4b] p-2">
                 <p className="text-[8px] text-white leading-tight">Quero me candidatar! 😍</p>
@@ -264,7 +243,7 @@ export default function HeroSection() {
             <span className="relative z-10">Robô automático</span>
           </span>
           <h1
-            className="text-[32px] leading-[40px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[53px] lg:leading-[66px]"
+            className="text-[32px] leading-[40px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[51px] lg:leading-[64px]"
             style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 800 }}
           >
             Pare de <span className="text-[#ef4444]">perder</span> vagas
