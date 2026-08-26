@@ -12,8 +12,6 @@ import { getUserPreference } from '@/lib/mock/preferences'
 import { calculateMatchScore } from '@/lib/services/matchingService'
 import { User, Job } from '@/lib/types'
 
-const WHATSAPP_API = process.env.NEXT_PUBLIC_WHATSAPP_API || 'https://vagazaps-whatsapp.onrender.com'
-
 interface MatchingUser {
   user: User
   score: number
@@ -109,7 +107,7 @@ export default function EnviarPage() {
           message: formatJobMessage(job),
         }))
 
-        const res = await fetch(`${WHATSAPP_API}/api/send-batch`, {
+        const res = await fetch('/api/whatsapp-batch', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ messages }),
