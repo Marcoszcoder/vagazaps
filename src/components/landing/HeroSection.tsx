@@ -239,7 +239,7 @@ export default function HeroSection() {
     <section className="bg-white py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <span className="relative mb-4 inline-block rounded-full bg-gradient-to-r from-[#22c55e] to-[#86efac] px-4 py-1 text-[10px] font-bold tracking-wide text-white shadow-sm">
+          <span className="relative mb-4 inline-block rounded-full bg-gradient-to-r from-[#22c55e] to-[#86efac] px-4 py-1 text-[11px] font-bold tracking-wide text-white shadow-sm">
             <span className="relative z-10">Robô automático</span>
           </span>
           <h1
