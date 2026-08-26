@@ -8,23 +8,23 @@ export default function HeroSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1
-            className="text-3xl leading-tight tracking-tight text-[#1e293b] sm:text-4xl md:text-5xl lg:text-5xl"
+            className="text-3xl leading-tight tracking-tight text-black sm:text-4xl md:text-5xl lg:text-5xl"
             style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 800 }}
           >
-            Pare de perder vagas
+            Pare de <span className="text-red-500">perder</span> vagas
             <br />
-            que poderiam mudar sua vida.
+            que poderiam mudar sua <span className="text-[#16a34a]">vida</span>.
           </h1>
           <p
             className="mx-auto mt-6 max-w-2xl lg:mx-auto"
             style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 400, fontSize: '16px', lineHeight: '26px', color: 'lab(48.496 0 0)' }}
           >
-            Você já perdeu vagas incríveis por não conseguir ficar de olho em mais de 20 sites de emprego ao mesmo tempo? Enquanto você estuda ou cuida da sua rotina, novas vagas continuam sendo publicadas. Nosso robô fica de olho por você e envia as melhores oportunidades direto no seu WhatsApp.
+            Você já perdeu vagas incríveis por não conseguir ficar de olho em mais de 20 sites de emprego. Enquanto você estuda ou cuida da sua rotina, novas vagas continuam sendo publicadas. Nosso robô fica de olho por você e envia as melhores oportunidades direto no seu WhatsApp.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/cadastro"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#16a34a] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-[#16a34a]/25 transition-all hover:bg-[#15803d] hover:shadow-[#16a34a]/40 sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#16a34a] px-6 py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#15803d] sm:w-auto"
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -33,7 +33,7 @@ export default function HeroSection() {
             </Link>
             <a
               href="#como-funciona"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[#16a34a] px-8 py-4 text-base font-semibold text-[#16a34a] transition-all hover:bg-[#16a34a] hover:text-white sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-lg border-2 border-[#16a34a] px-6 py-3 text-sm font-semibold text-[#16a34a] transition-all hover:bg-[#16a34a] hover:text-white sm:w-auto"
             >
               Ver como funciona
             </a>
