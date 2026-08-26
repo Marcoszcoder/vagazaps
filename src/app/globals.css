@@ -32,8 +32,8 @@ input:focus, select:focus, textarea:focus {
 }
 
 @keyframes shine {
-  0% { transform: translateX(-100%); }
-  50% { transform: translateX(80%); }
-  50.01% { transform: translateX(-100%); }
-  100% { transform: translateX(-100%); }
+  0% { transform: translateX(-150%); }
+  45% { transform: translateX(150%); }
+  45.01% { transform: translateX(-150%); }
+  100% { transform: translateX(-150%); }
 }
