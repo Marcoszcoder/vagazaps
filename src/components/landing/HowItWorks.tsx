@@ -4,7 +4,7 @@ export default function HowItWorks() {
   const steps = [
     {
       number: '01',
-      title: 'Crie sua conta gratuita',
+      title: 'Crie sua conta na VagaZaps',
       description:
         'Cadastre-se em segundos e configure suas preferências de emprego.',
       icon: (
