@@ -351,20 +351,18 @@ export default function HeroSection() {
                         <span className="text-[6px] font-bold text-[#22c55e]">NOVA VAGA</span>
                       </div>
                       <p className="text-[8px] font-bold text-white leading-tight">Dev Full Stack</p>
-                      <p className="text-[6px] text-slate-300">📍 Curitiba • R$ 6.500</p>
-                      <p className="text-[5px] text-slate-500">🏢 TechCorp • CLT</p>
+                      <p className="text-[6px] text-slate-300">📍 Curitiba • R$ 6.500/mês</p>
+                      <p className="text-[5px] text-slate-400">🏢 TechCorp • CLT • Presencial</p>
                       <div className="mt-1 flex items-center gap-1">
                         <div className="flex-1 h-1.5 rounded-full bg-slate-700/60 overflow-hidden">
                           <div className="h-full rounded-full bg-gradient-to-r from-[#22c55e] to-[#4ade80]" style={{ width: '92%' }} />
                         </div>
                         <span className="text-[6px] font-bold text-[#22c55e]">92%</span>
                       </div>
-                      <div className="mt-1.5 rounded bg-gradient-to-r from-[#22c55e] to-[#16a34a] px-2 py-0.5 text-center">
-                        <span className="text-[6px] font-bold text-white">VER VAGA →</span>
-                      </div>
+                      <p className="mt-1 text-[5px] text-[#53bdeb] underline">empregos.com.br/vaga/dev-fullstack</p>
                     </div>
                     <div className="max-w-[65%] ml-auto rounded-lg rounded-tr-none bg-[#005c4b] p-1.5">
-                      <p className="text-[7px] text-white">Quero me candidatar! 😍</p>
+                      <p className="text-[7px] text-white">Obrigado por me avisar 😊</p>
                       <div className="text-right text-[5px] text-blue-200">9:42 ✓✓</div>
                     </div>
                   </div>
