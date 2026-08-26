@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useJobs } from '@/contexts/JobsContext'
 import { useWhatsAppMessages } from '@/hooks/useWhatsAppMessages'
+import { storeUserPhone } from '@/lib/mock/users'
 
 export default function WhatsAppPage() {
   const { user, updateUser } = useAuth()
@@ -39,6 +40,7 @@ export default function WhatsAppPage() {
 
     const fullPhone = digits.startsWith('55') ? digits : `55${digits}`
     updateUser({ phone: fullPhone })
+    if (user) storeUserPhone(user.id, fullPhone)
     setSaved(true)
     setError('')
     setStatus('Enviando mensagem de boas-vindas...')

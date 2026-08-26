@@ -8,7 +8,7 @@ const users: User[] = [
     id: 'user-001',
     name: 'Adiel Marcos',
     email: 'adielmarcos@gmail.com',
-    phone: '(66) 99999-1234',
+    phone: '(66) 99207-9746',
     city: 'Rondonópolis',
     state: 'MT',
     plan: 'PRO',
@@ -81,6 +81,27 @@ export function getUserByEmail(email: string): User | undefined {
   return users.find((u) => u.email === email)
 }
 
+const STORAGE_KEY = 'vagazaps_user_phones'
+
+function getStoredPhones(): Record<string, string> {
+  if (typeof window === 'undefined') return {}
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    return raw ? JSON.parse(raw) : {}
+  } catch { return {} }
+}
+
+export function storeUserPhone(userId: string, phone: string) {
+  if (typeof window === 'undefined') return
+  const phones = getStoredPhones()
+  phones[userId] = phone
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(phones))
+}
+
 export function getAllUsers(): User[] {
-  return [...users]
+  const phones = getStoredPhones()
+  return users.map(u => ({
+    ...u,
+    phone: phones[u.id] || u.phone,
+  }))
 }
