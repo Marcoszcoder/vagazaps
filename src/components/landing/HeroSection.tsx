@@ -8,18 +8,18 @@ export default function HeroSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1
-            className="text-3xl leading-tight tracking-tight text-black sm:text-4xl md:text-5xl lg:text-5xl"
+            className="text-2xl leading-tight tracking-tight text-black sm:text-3xl md:text-4xl lg:text-5xl"
             style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 800 }}
           >
-            Pare de <span className="text-red-500">perder</span> vagas
+            Pare de <span className="text-[#dc2626]">perder</span> vagas
             <br />
-            que poderiam mudar sua <span className="text-[#16a34a]">vida</span>.
+            que poderiam mudar sua <span className="text-[#15803d]">vida</span>.
           </h1>
           <p
-            className="mx-auto mt-6 max-w-2xl lg:mx-auto"
-            style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 400, fontSize: '16px', lineHeight: '26px', color: 'lab(48.496 0 0)' }}
+            className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed sm:text-base lg:mx-auto"
+            style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 400, color: 'lab(48.496 0 0)' }}
           >
-            Você já perdeu vagas incríveis por não conseguir ficar de olho em mais de 20 sites de emprego. Enquanto você estuda ou cuida da sua rotina, novas vagas continuam sendo publicadas. Nosso robô fica de olho por você e envia as melhores oportunidades direto no seu WhatsApp.
+            Você já perdeu vagas incríveis por não conseguir acompanhar dezenas de sites de emprego? Enquanto você cuida da sua rotina, novas oportunidades continuam surgindo. Nosso robô fica de olho por você e envia as vagas direto no seu WhatsApp.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
