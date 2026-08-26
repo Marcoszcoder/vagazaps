@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import LandingNavbar from '@/components/landing/LandingNavbar'
 import HeroSection from '@/components/landing/HeroSection'
 import HowItWorks from '@/components/landing/HowItWorks'
+import ProblemSection from '@/components/landing/ProblemSection'
 import BenefitsSection from '@/components/landing/BenefitsSection'
 import TestimonialsSection from '@/components/landing/TestimonialsSection'
 import PricingSection from '@/components/landing/PricingSection'
@@ -21,6 +22,7 @@ export default function HomePage() {
       <main className="flex-1">
         <HeroSection />
         <HowItWorks />
+        <ProblemSection />
         <BenefitsSection />
         <TestimonialsSection />
         <PricingSection />
