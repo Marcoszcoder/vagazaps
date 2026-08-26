@@ -373,7 +373,7 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right phone - notifications */}
+          {/* Right phone - preferences */}
           <div className="relative z-0 scale-[0.85] -ml-6">
             <div className="rounded-[2.5rem] bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 p-[2px] shadow-xl shadow-black/10">
               <div className="rounded-[2.3rem] bg-slate-800 p-[2px]">
@@ -390,18 +390,27 @@ export default function HeroSection() {
                     </div>
                   </div>
                   <div className="bg-[#1f2c34] px-3 py-2">
-                    <span className="text-[8px] font-semibold text-white">Alertas</span>
+                    <span className="text-[8px] font-semibold text-white">Preferências</span>
                   </div>
-                  <div className="bg-[#0b141a] p-2 space-y-1.5 min-h-[200px]">
-                    <div className="rounded-md bg-[#1d2e35] p-2 border-l-2 border-[#22c55e]">
-                      <p className="text-[6px] font-bold text-[#22c55e]">NOVA VAGA</p>
-                      <p className="text-[7px] font-bold text-white">Dev React</p>
-                      <p className="text-[6px] text-slate-400">Remoto • R$ 7.000</p>
+                  <div className="bg-[#0b141a] p-2 space-y-2 min-h-[200px]">
+                    <div className="rounded-md bg-[#1d2e35] p-2">
+                      <p className="text-[6px] text-slate-400 mb-0.5">Cargo</p>
+                      <p className="text-[7px] font-bold text-white">Desenvolvedor Full Stack</p>
                     </div>
-                    <div className="rounded-md bg-[#1d2e35] p-2 border-l-2 border-[#22c55e]">
-                      <p className="text-[6px] font-bold text-[#22c55e]">NOVA VAGA</p>
-                      <p className="text-[7px] font-bold text-white">UI Designer</p>
-                      <p className="text-[6px] text-slate-400">São Paulo • R$ 5.500</p>
+                    <div className="rounded-md bg-[#1d2e35] p-2">
+                      <p className="text-[6px] text-slate-400 mb-0.5">Cidade</p>
+                      <p className="text-[7px] font-bold text-white">Curitiba</p>
+                    </div>
+                    <div className="rounded-md bg-[#1d2e35] p-2">
+                      <p className="text-[6px] text-slate-400 mb-0.5">Salário mínimo</p>
+                      <p className="text-[7px] font-bold text-[#22c55e]">R$ 5.000+</p>
+                    </div>
+                    <div className="rounded-md bg-[#1d2e35] p-2">
+                      <p className="text-[6px] text-slate-400 mb-0.5">Tipo de vaga</p>
+                      <div className="flex gap-1 mt-0.5">
+                        <span className="rounded-full bg-[#22c55e]/20 px-1.5 py-0.5 text-[6px] font-semibold text-[#22c55e]">CLT</span>
+                        <span className="rounded-full bg-[#22c55e]/20 px-1.5 py-0.5 text-[6px] font-semibold text-[#22c55e]">PJ</span>
+                      </div>
                     </div>
                   </div>
                 </div>
