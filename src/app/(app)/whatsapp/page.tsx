@@ -1,12 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
+import { useJobs } from '@/contexts/JobsContext'
+import { useWhatsAppMessages } from '@/hooks/useWhatsAppMessages'
 
 export default function WhatsAppPage() {
   const { user, updateUser } = useAuth()
+  const { jobs } = useJobs()
+  const { startMessageFlow } = useWhatsAppMessages()
   const [phone, setPhone] = useState(user?.phone || '')
   const [saved, setSaved] = useState(false)
+  const [sending, setSending] = useState(false)
   const [error, setError] = useState('')
 
   function formatPhone(value: string): string {
@@ -24,19 +29,23 @@ export default function WhatsAppPage() {
     setError('')
   }
 
-  function handleSave() {
+  async function handleSave() {
     const digits = phone.replace(/\D/g, '')
     if (digits.length < 10 || digits.length > 11) {
       setError('Número inválido. Use o formato: (DDD) 99999-9999')
       return
     }
-    if (!digits.startsWith('55')) {
-      updateUser({ phone: `55${digits}` })
-    } else {
-      updateUser({ phone: digits })
-    }
+
+    const fullPhone = digits.startsWith('55') ? digits : `55${digits}`
+    updateUser({ phone: fullPhone })
     setSaved(true)
     setError('')
+
+    if (user && jobs.length > 0) {
+      setSending(true)
+      startMessageFlow(fullPhone, user.name, jobs)
+      setTimeout(() => setSending(false), 3000)
+    }
   }
 
   return (
@@ -66,8 +75,11 @@ export default function WhatsAppPage() {
         )}
 
         {saved && (
-          <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-            <p className="text-sm text-green-700">Número salvo com sucesso!</p>
+          <div className="bg-green-50 border border-green-200 rounded-lg p-3 space-y-1">
+            <p className="text-sm text-green-700 font-medium">Número salvo com sucesso!</p>
+            {sending && (
+              <p className="text-xs text-green-600">Enviando mensagem de boas-vindas...</p>
+            )}
           </div>
         )}
 
