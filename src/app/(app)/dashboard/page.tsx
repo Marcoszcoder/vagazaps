@@ -16,7 +16,7 @@ const POLL_INTERVAL_MS = 5 * 60 * 1000
 
 export default function DashboardPage() {
   const { user } = useAuth()
-  const { jobs, getRecommended, refreshJobs } = useJobs()
+  const { jobs, getRecommended, refreshJobs, runCollection } = useJobs()
   const { favorites } = useFavorites()
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
@@ -33,11 +33,9 @@ export default function DashboardPage() {
     const poll = async () => {
       try {
         setPolling(true)
-        const res = await fetch('/api/collect', { method: 'POST' })
-        const data = await res.json()
-        if (data.success && data.newJobs > 0) {
-          setLastPollResult({ newJobs: data.newJobs, totalNotifications: data.totalNotifications })
-          refreshJobs()
+        const result = await runCollection()
+        if (result.newJobs > 0) {
+          setLastPollResult({ newJobs: result.newJobs, totalNotifications: 0 })
         }
       } catch {
         // Silent fail for background polling

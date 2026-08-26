@@ -17,7 +17,7 @@ const sources: JobSource[] = [
   },
   {
     id: 'src-003',
-    name: 'Gupy',
+    name: 'LinkedIn',
     status: 'active',
     lastSync: new Date().toISOString(),
     type: 'scraping',

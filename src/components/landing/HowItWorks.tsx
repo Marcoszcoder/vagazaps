@@ -1,77 +1,129 @@
+import Link from 'next/link'
+
 export default function HowItWorks() {
   const steps = [
     {
       number: '01',
-      title: 'Diga o que você procura',
-      icon: '🎯',
+      title: 'Crie sua conta gratuita',
       description:
-        'Escolha sua cidade, profissão, salário e preferências.',
+        'Cadastre-se em segundos e configure suas preferências de emprego.',
+      icon: (
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+        </svg>
+      ),
     },
     {
       number: '02',
-      title: 'Nós monitoramos as oportunidades',
-      icon: '🔍',
+      title: 'Diga o que você procura',
       description:
-        'O VagaZaps identifica novas vagas disponíveis nas fontes cadastradas.',
+        'Escolha cidade, profissão, salário e preferências. Quanto mais específico, melhores os resultados.',
+      icon: (
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+        </svg>
+      ),
     },
     {
       number: '03',
-      title: 'Você recebe o alerta',
-      icon: '📲',
+      title: 'Receba vagas no WhatsApp',
       description:
-        'Quando uma vaga compatível aparece, você recebe uma notificação.',
+        'Quando uma vaga compatível aparece, você recebe uma notificação automaticamente. Sem precisar abrir nenhum app.',
+      icon: (
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+        </svg>
+      ),
     },
   ]
 
   return (
-    <section id="como-funciona" className="bg-slate-50 py-20">
+    <section id="como-funciona" className="relative bg-[#fafbfc] py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-[#1e293b] sm:text-4xl">
+          <span className="inline-block rounded-full bg-[#16a34a]/10 px-4 py-1.5 text-sm font-semibold text-[#16a34a]">
+            Simples e rápido
+          </span>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight text-[#1e293b] sm:text-4xl lg:text-5xl">
             Como funciona
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
-            Três passos simples para começar a receber vagas no WhatsApp.
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-500">
+            Três passos para começar a receber vagas no WhatsApp.
           </p>
         </div>
 
-        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {steps.map((step) => (
-            <div
-              key={step.number}
-              className="relative rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md"
-            >
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#16a34a]/10 text-3xl">
-                {step.icon}
+        <div className="relative mt-16">
+          <div className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-[#16a34a]/20 via-[#16a34a]/40 to-[#16a34a]/20 lg:block" />
+
+          <div className="grid gap-8 lg:grid-cols-3">
+            {steps.map((step, i) => (
+              <div key={step.number} className="relative">
+                <div className="rounded-2xl border border-slate-200/80 bg-white p-8 shadow-sm transition-all hover:shadow-lg hover:shadow-[#16a34a]/5 hover:border-[#16a34a]/20">
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#16a34a] text-white shadow-lg shadow-[#16a34a]/20">
+                      {step.icon}
+                    </div>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#16a34a]/10 text-sm font-bold text-[#16a34a]">
+                      {step.number}
+                    </div>
+                  </div>
+                  <h3 className="mt-5 text-xl font-bold text-[#1e293b]">
+                    {step.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-500">
+                    {step.description}
+                  </p>
+                </div>
+                {i < steps.length - 1 && (
+                  <div className="absolute -right-4 top-1/2 hidden -translate-y-1/2 text-[#16a34a]/40 lg:block">
+                    <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                  </div>
+                )}
               </div>
-              <h3 className="mt-5 text-lg font-bold text-[#1e293b]">
-                <span className="text-[#16a34a]">{step.number}</span> —{' '}
-                {step.title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                {step.description}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-center justify-center gap-4">
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <div className="rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm">
-              🌐 Fontes
+        <div className="mt-16 rounded-2xl border border-slate-200/80 bg-white p-8 shadow-sm">
+          <div className="flex flex-col items-center justify-center gap-6">
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-6 py-3">
+                <span className="text-lg">🌐</span>
+                <span className="text-sm font-semibold text-slate-700">Empregos.com.br</span>
+              </div>
+              <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-6 py-3">
+                <span className="text-lg">💼</span>
+                <span className="text-sm font-semibold text-slate-700">Catho</span>
+              </div>
+              <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-6 py-3">
+                <span className="text-lg">🔗</span>
+                <span className="text-sm font-semibold text-slate-700">LinkedIn</span>
+              </div>
             </div>
-            <span className="text-2xl text-[#16a34a]">→</span>
-            <div className="rounded-xl border-2 border-[#16a34a] bg-[#16a34a]/10 px-6 py-3 text-sm font-bold text-[#16a34a] shadow-sm">
-              ⚡ VagaZaps
+            <div className="flex items-center gap-3">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#16a34a]/30 to-transparent" />
+              <span className="text-sm font-semibold text-[#16a34a]">VagaZaps</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#16a34a]/30 to-transparent" />
             </div>
-            <span className="text-2xl text-[#16a34a]">→</span>
-            <div className="rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm">
-              📲 WhatsApp
+            <div className="flex items-center gap-3 rounded-xl bg-[#16a34a]/10 px-6 py-3">
+              <span className="text-lg">📲</span>
+              <span className="text-sm font-semibold text-[#16a34a]">Seu WhatsApp</span>
             </div>
           </div>
-          <p className="text-center text-sm text-slate-500">
-            Monitoramos as melhores fontes de vagas e enviamos para você.
-          </p>
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link
+            href="/cadastro"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#16a34a] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-[#16a34a]/25 transition-all hover:bg-[#15803d] hover:shadow-[#16a34a]/40"
+          >
+            Começar agora
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </Link>
         </div>
       </div>
     </section>

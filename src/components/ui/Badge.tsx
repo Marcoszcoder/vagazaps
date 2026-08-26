@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 interface BadgeProps {
   children: ReactNode
-  variant: 'green' | 'blue' | 'yellow' | 'gray' | 'red'
+  variant: 'green' | 'blue' | 'yellow' | 'gray' | 'red' | 'purple' | 'linkedin'
 }
 
 const variantMap = {
@@ -11,6 +11,8 @@ const variantMap = {
   yellow: 'bg-yellow-50 text-yellow-700',
   gray: 'bg-gray-100 text-gray-600',
   red: 'bg-red-50 text-red-700',
+  purple: 'bg-purple-50 text-purple-700',
+  linkedin: 'bg-[#0077B5]/10 text-[#0077B5]',
 }
 
 export default function Badge({ children, variant }: BadgeProps) {

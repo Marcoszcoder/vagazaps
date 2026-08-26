@@ -5,7 +5,7 @@ import { useJobs } from '@/contexts/JobsContext'
 import JobCard from '@/components/ui/JobCard'
 import EmptyState from '@/components/ui/EmptyState'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
-import { JobFilters, WorkMode, ContractType, ExperienceLevel } from '@/lib/types'
+import { WorkMode, ContractType, ExperienceLevel } from '@/lib/types'
 
 const BRAZILIAN_STATES = [
   'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS',
@@ -44,10 +44,11 @@ const SORT_OPTIONS = [
 ]
 
 export default function VagasPage() {
-  const { jobs, loading, filterJobsList, getJobMatch, refreshJobs } = useJobs()
+  const { jobs, loading, getJobMatch, runCollection } = useJobs()
   const [showFilters, setShowFilters] = useState(false)
   const [collecting, setCollecting] = useState(false)
   const [collectResult, setCollectResult] = useState<string | null>(null)
+  const [collectError, setCollectError] = useState<string | null>(null)
 
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
@@ -66,15 +67,23 @@ export default function VagasPage() {
   async function handleCollect() {
     setCollecting(true)
     setCollectResult(null)
+    setCollectError(null)
     try {
-      const res = await fetch('/api/collect', { method: 'POST' })
-      const data = await res.json()
-      if (data.success) {
-        setCollectResult(`${data.newJobs} novas vagas coletadas de ${data.results?.length || 0} fontes`)
-        refreshJobs()
+      const result = await runCollection()
+      if (result.dailyLimit) {
+        setCollectError('Limite diário atingido (100 vagas). Tente amanhã.')
+      } else if (result.newJobs === 0) {
+        setCollectResult('Nenhuma nova vaga encontrada')
+      } else {
+        setCollectResult(`${result.newJobs} novas vagas coletadas`)
       }
-    } catch {
-      setCollectResult('Erro ao coletar vagas')
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e)
+      if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('ERR_BLOCKED')) {
+        setCollectError('Bloqueado pelo navegador. Desative extensões de bloqueio (uBlock, AdBlock) ou use o modo anônimo.')
+      } else {
+        setCollectError(`Erro ao coletar vagas: ${msg}`)
+      }
     }
     setCollecting(false)
   }
@@ -82,19 +91,35 @@ export default function VagasPage() {
   const activeFiltersCount = [city, state, workMode, contractType, experience, salaryMin].filter(Boolean).length
 
   const filteredJobs = useMemo(() => {
-    const filters: JobFilters = {}
-    if (city.trim()) filters.city = city.trim()
-    if (state) filters.state = state
-    if (workMode) filters.workMode = workMode
-    if (contractType) filters.contractType = contractType
-    if (experience) filters.experience = experience
-    if (salaryMin) filters.salaryMin = parseInt(salaryMin.replace(/[^\d]/g, '')) || 0
-    if (sortBy) filters.sortBy = sortBy
+    let result = [...jobs]
 
-    let result = filterJobsList(filters)
+    if (city.trim()) {
+      const term = city.trim().toLowerCase()
+      result = result.filter(j => j.city.toLowerCase().includes(term))
+    }
+    if (state) {
+      result = result.filter(j => j.state === state)
+    }
+    if (workMode) {
+      result = result.filter(j => j.workMode === workMode)
+    }
+    if (contractType) {
+      result = result.filter(j => j.contractType === contractType)
+    }
+    if (experience) {
+      result = result.filter(j => j.experience === experience)
+    }
+    if (salaryMin) {
+      const min = parseInt(salaryMin.replace(/[^\d]/g, '')) || 0
+      result = result.filter(j => j.salaryMax >= min)
+    }
 
-    if (sortBy === 'match') {
-      result = [...result].sort((a, b) => {
+    if (sortBy === 'recent') {
+      result.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    } else if (sortBy === 'salary') {
+      result.sort((a, b) => b.salaryMax - a.salaryMax)
+    } else if (sortBy === 'match') {
+      result.sort((a, b) => {
         const matchA = getJobMatch(a)
         const matchB = getJobMatch(b)
         return (matchB?.score || 0) - (matchA?.score || 0)
@@ -102,7 +127,7 @@ export default function VagasPage() {
     }
 
     return result
-  }, [city, state, workMode, contractType, experience, salaryMin, sortBy, jobs, filterJobsList, getJobMatch])
+  }, [city, state, workMode, contractType, experience, salaryMin, sortBy, jobs, getJobMatch])
 
   function clearFilters() {
     setCity('')
@@ -251,6 +276,28 @@ export default function VagasPage() {
         </div>
       )}
 
+      {collectError && !collecting && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <p className="text-sm text-red-700 font-medium">{collectError}</p>
+              <p className="text-xs text-red-500 mt-1">
+                Se estiver no navegador normal, desative extensões de bloqueio ou clique em "Tentar novamente".
+              </p>
+            </div>
+            <div className="flex items-center gap-2 ml-3">
+              <button
+                onClick={handleCollect}
+                className="px-3 py-1 text-xs font-medium text-red-700 bg-red-100 rounded hover:bg-red-200 transition-colors"
+              >
+                Tentar novamente
+              </button>
+              <button onClick={() => setCollectError(null)} className="text-red-600 hover:text-red-800 text-sm">✕</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <p className="text-sm text-gray-500">
         <span className="font-semibold text-gray-900">{filteredJobs.length}</span> vagas encontradas
       </p>
@@ -265,7 +312,7 @@ export default function VagasPage() {
         <EmptyState
           icon="📋"
           title="Nenhuma vaga coletada ainda"
-          description="Clique abaixo para buscar vagas reais no Empregos.com.br e Catho."
+          description="Clique abaixo para buscar vagas reais no Empregos.com.br, Catho e LinkedIn."
           action={{ label: '🔍 Buscar vagas agora', onClick: handleCollect }}
         />
       ) : (

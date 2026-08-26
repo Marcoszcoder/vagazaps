@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { useJobs } from '@/contexts/JobsContext'
@@ -9,6 +9,14 @@ import StatsCard from '@/components/ui/StatsCard'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import { getAllUsers } from '@/lib/mock/users'
 import { getAllSources } from '@/lib/mock/sources'
+
+const WHATSAPP_API = 'https://vagazaps-whatsapp.onrender.com'
+
+interface ConnectionState {
+  status: string
+  phone: string | null
+  hasQr: boolean
+}
 
 interface CollectionResult {
   success: boolean
@@ -19,55 +27,123 @@ interface CollectionResult {
 
 export default function AdminPage() {
   const { user, isLoading: authLoading } = useAuth()
-  const { jobs, refreshJobs } = useJobs()
+  const { jobs, runCollection } = useJobs()
   const { notifications } = useNotifications()
   const router = useRouter()
   const [collecting, setCollecting] = useState(false)
   const [collectionResult, setCollectionResult] = useState<CollectionResult | null>(null)
   const [collectionError, setCollectionError] = useState('')
 
+  // WhatsApp state
+  const [connection, setConnection] = useState<ConnectionState>({ status: 'disconnected', phone: null, hasQr: false })
+  const [qrCode, setQrCode] = useState<string | null>(null)
+  const [whatsappLoading, setWhatsappLoading] = useState(false)
+  const [whatsappError, setWhatsappError] = useState('')
+
+  const checkStatus = useCallback(async () => {
+    try {
+      const res = await fetch(`${WHATSAPP_API}/api/status`)
+      const data = await res.json()
+      setConnection(data)
+    } catch {
+      setConnection({ status: 'offline', phone: null, hasQr: false })
+    }
+  }, [])
+
+  const fetchQr = useCallback(async () => {
+    try {
+      const res = await fetch(`${WHATSAPP_API}/api/qr`)
+      const data = await res.json()
+      if (data.qr) {
+        setQrCode(data.qr)
+      }
+    } catch {
+      // ignore
+    }
+  }, [])
+
+  useEffect(() => {
+    checkStatus()
+    const interval = setInterval(checkStatus, 3000)
+    return () => clearInterval(interval)
+  }, [checkStatus])
+
+  useEffect(() => {
+    if (connection.status === 'qr_ready') {
+      fetchQr()
+      const interval = setInterval(fetchQr, 2000)
+      return () => clearInterval(interval)
+    }
+    if (connection.status === 'connected') {
+      setQrCode(null)
+    }
+  }, [connection.status, fetchQr])
+
+  async function handleConnect() {
+    setWhatsappLoading(true)
+    setWhatsappError('')
+    try {
+      const res = await fetch(`${WHATSAPP_API}/api/connect`, { method: 'POST' })
+      const data = await res.json()
+      if (!data.success) {
+        setWhatsappError(data.error || 'Erro ao conectar')
+      }
+    } catch {
+      setWhatsappError('Não foi possível conectar ao servidor. Verifique se o backend está rodando.')
+    }
+    setWhatsappLoading(false)
+  }
+
+  async function handleDisconnect() {
+    try {
+      await fetch(`${WHATSAPP_API}/api/disconnect`, { method: 'POST' })
+      setQrCode(null)
+      setConnection({ status: 'disconnected', phone: null, hasQr: false })
+    } catch {
+      setWhatsappError('Erro ao desconectar')
+    }
+  }
+
+  function getWhatsappStatusDisplay() {
+    switch (connection.status) {
+      case 'connected':
+        return { text: 'Conectado', color: 'green', icon: '✅' }
+      case 'qr_ready':
+        return { text: 'Aguardando QR Code', color: 'yellow', icon: '📱' }
+      case 'connecting':
+        return { text: 'Conectando...', color: 'blue', icon: '🔄' }
+      case 'disconnected':
+        return { text: 'Desconectado', color: 'gray', icon: '⚪' }
+      case 'logged_out':
+        return { text: 'Desconectado (logout)', color: 'red', icon: '🔴' }
+      case 'offline':
+        return { text: 'Backend offline', color: 'red', icon: '⚠️' }
+      default:
+        return { text: connection.status, color: 'gray', icon: '❓' }
+    }
+  }
+
   if (authLoading) return <LoadingSpinner text="Carregando painel..." />
-
-  if (!user) {
-    return (
-      <div className="flex flex-col items-center justify-center py-20 text-center px-4">
-        <span className="text-5xl mb-4">🔒</span>
-        <h2 className="text-xl font-bold text-gray-900 mb-2">Acesso restrito</h2>
-        <p className="text-sm text-gray-500">Faça login para acessar o painel administrativo.</p>
-      </div>
-    )
-  }
-
-  if (!user.isAdmin) {
-    return (
-      <div className="flex flex-col items-center justify-center py-20 text-center px-4">
-        <span className="text-5xl mb-4">🔒</span>
-        <h2 className="text-xl font-bold text-gray-900 mb-2">Acesso restrito</h2>
-        <p className="text-sm text-gray-500 mb-4">Apenas administradores podem acessar esta página.</p>
-        <p className="text-xs text-gray-400">Conta: {user.email}</p>
-      </div>
-    )
-  }
 
   const allUsers = getAllUsers()
   const sources = getAllSources()
   const activeSources = sources.filter((s) => s.status === 'active').length
   const recentNotifications = notifications.slice(0, 5)
   const realJobs = jobs.filter(j => j.source === 'Empregos.com.br' || j.source === 'Catho')
+  const whatsappStatus = getWhatsappStatusDisplay()
 
   async function handleRunCollection() {
     setCollecting(true)
     setCollectionResult(null)
     setCollectionError('')
     try {
-      const res = await fetch('/api/collect', { method: 'POST' })
-      const data: CollectionResult = await res.json()
-      if (data.success) {
-        setCollectionResult(data)
-        refreshJobs()
-      } else {
-        setCollectionError(data.results?.[0]?.error || 'Erro desconhecido na coleta')
-      }
+      const result = await runCollection()
+      setCollectionResult({
+        success: true,
+        newJobs: result.newJobs,
+        totalNotifications: 0,
+        results: [{ sourceName: 'Empregos.com.br', collected: 0, newJobs: 0 }, { sourceName: 'Catho', collected: 0, newJobs: 0 }],
+      })
     } catch (err) {
       setCollectionError('Falha ao conectar com o servidor de coleta')
     }
@@ -77,8 +153,77 @@ export default function AdminPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Painel Administrativo</h1>
-        <p className="text-gray-500 mt-1">Visão geral do sistema VagaZaps.</p>
+        <h1 className="text-2xl font-bold text-gray-900">Painel Master</h1>
+        <p className="text-gray-500 mt-1">Controle total do sistema VagaZaps.</p>
+      </div>
+
+      {/* WhatsApp Master Control */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-lg font-bold text-gray-900">WhatsApp - Controle Master</h2>
+            <p className="text-sm text-gray-500 mt-1">Conecte o WhatsApp do sistema para enviar vagas aos clientes.</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className={`w-2.5 h-2.5 rounded-full ${
+              whatsappStatus.color === 'green' ? 'bg-green-500' :
+              whatsappStatus.color === 'yellow' ? 'bg-yellow-500 animate-pulse' :
+              whatsappStatus.color === 'blue' ? 'bg-blue-500 animate-spin' :
+              whatsappStatus.color === 'red' ? 'bg-red-500' : 'bg-gray-300'
+            }`} />
+            <span className="text-sm text-gray-600">{whatsappStatus.icon} {whatsappStatus.text}</span>
+          </div>
+        </div>
+
+        {connection.phone && (
+          <p className="text-xs text-gray-400 mb-4">Telefone conectado: {connection.phone}</p>
+        )}
+
+        {whatsappError && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
+            <p className="text-sm text-red-700">{whatsappError}</p>
+          </div>
+        )}
+
+        {connection.status === 'qr_ready' && qrCode && (
+          <div className="flex flex-col items-center gap-4 mb-4">
+            <p className="text-sm text-gray-600">Escaneie o QR Code com o WhatsApp do sistema</p>
+            <div className="bg-white p-4 rounded-xl border-2 border-gray-200 shadow-sm">
+              <img
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(qrCode)}`}
+                alt="QR Code WhatsApp"
+                className="w-64 h-64"
+              />
+            </div>
+            <p className="text-xs text-gray-400">WhatsApp → Menu → Dispositivos conectados → Conectar dispositivo</p>
+          </div>
+        )}
+
+        {connection.status === 'connected' && (
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+            <p className="text-sm text-green-800 font-medium">WhatsApp conectado com sucesso!</p>
+            <p className="text-sm text-green-700 mt-1">O sistema está pronto para enviar vagas via WhatsApp.</p>
+          </div>
+        )}
+
+        <div className="flex gap-2">
+          {connection.status !== 'connected' && connection.status !== 'qr_ready' ? (
+            <button
+              onClick={handleConnect}
+              disabled={whatsappLoading || connection.status === 'connecting'}
+              className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {whatsappLoading ? 'Conectando...' : 'Conectar WhatsApp'}
+            </button>
+          ) : (
+            <button
+              onClick={handleDisconnect}
+              className="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors"
+            >
+              Desconectar
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
@@ -95,7 +240,7 @@ export default function AdminPage() {
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
         <h2 className="text-base font-bold text-gray-900 mb-4">Coleta de vagas reais</h2>
         <p className="text-sm text-gray-500 mb-4">
-          Busca vagas automaticamente no Empregos.com.br e Catho. As vagas coletadas passam pelo matching e geram notificações.
+          Busca vagas automaticamente no Empregos.com.br, Catho e LinkedIn. As vagas coletadas passam pelo matching e geram notificações.
         </p>
 
         <button

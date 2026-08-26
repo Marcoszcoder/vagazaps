@@ -3,6 +3,8 @@ import { getAllJobs, addJob } from '../mock/jobs'
 import { getAllSources } from '../mock/sources'
 import { scrapeEmpregos } from './scrapers/empregosScraper'
 import { scrapeCatho } from './scrapers/cathoScraper'
+import { scrapeLinkedIn } from './scrapers/linkedinScraper'
+import { enqueueCollector, CollectorTask } from './collectorQueue'
 
 function generateHash(str: string): string {
   let hash = 0
@@ -45,40 +47,34 @@ export interface CollectionResult {
   error?: string
 }
 
+const collectors: CollectorTask[] = [
+  { name: 'Empregos.com.br', weight: 'light', execute: scrapeEmpregos },
+  { name: 'Catho', weight: 'light', execute: scrapeCatho },
+  { name: 'LinkedIn', weight: 'heavy', execute: scrapeLinkedIn, timeoutMs: 90_000 },
+]
+
 export async function collectFromAllSources(): Promise<{ newJobs: Job[]; results: CollectionResult[] }> {
   const results: CollectionResult[] = []
   const allNewJobs: Job[] = []
 
-  try {
-    const empregosJobs = await scrapeEmpregos()
-    let newCount = 0
-    for (const job of empregosJobs) {
-      const result = processNewJob(job)
-      if (result.saved) {
-        allNewJobs.push(result.job)
-        newCount++
+  const collectorPromises = collectors.map(async (task) => {
+    try {
+      const jobs = await enqueueCollector(task)
+      let newCount = 0
+      for (const job of jobs) {
+        const result = processNewJob(job)
+        if (result.saved) {
+          allNewJobs.push(result.job)
+          newCount++
+        }
       }
+      results.push({ sourceName: task.name, collected: jobs.length, newJobs: newCount })
+    } catch (error) {
+      results.push({ sourceName: task.name, collected: 0, newJobs: 0, error: String(error) })
     }
-    results.push({ sourceName: 'Empregos.com.br', collected: empregosJobs.length, newJobs: newCount })
-  } catch (error) {
-    results.push({ sourceName: 'Empregos.com.br', collected: 0, newJobs: 0, error: String(error) })
-  }
+  })
 
-  try {
-    const cathoJobs = await scrapeCatho()
-    let newCount = 0
-    for (const job of cathoJobs) {
-      const result = processNewJob(job)
-      if (result.saved) {
-        allNewJobs.push(result.job)
-        newCount++
-      }
-    }
-    results.push({ sourceName: 'Catho', collected: cathoJobs.length, newJobs: newCount })
-  } catch (error) {
-    results.push({ sourceName: 'Catho', collected: 0, newJobs: 0, error: String(error) })
-  }
-
+  await Promise.all(collectorPromises)
   return { newJobs: allNewJobs, results }
 }
 

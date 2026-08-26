@@ -35,42 +35,70 @@ export async function scrapeEmpregos(): Promise<Job[]> {
       const title = card.find('h2 span').first().text().trim()
       const company = card.find('h3 a').first().text().trim()
 
+      // City: <img src="...location-on-outline.svg"> next sibling <h3 title="City, ST">
       let city = ''
       let state = ''
-      card.find('h3').each((_, h3) => {
-        const text = $(h3).text().trim()
-        if (text.includes(',')) {
-          const parts = text.split(',').map(s => s.trim())
-          if (parts.length === 2 && parts[1].length <= 2) {
-            city = parts[0]
-            state = parts[1]
+      const validStates = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO']
+      
+      card.find('img').each((_, img) => {
+        const src = $(img).attr('src') || ''
+        if (src.includes('location-on-outline')) {
+          const nextH3 = $(img).next('h3')
+          if (nextH3.length > 0) {
+            const locationText = nextH3.attr('title') || nextH3.text().trim()
+            const parts = locationText.split(',').map(s => s.trim())
+            if (parts.length >= 2) {
+              city = parts[0]
+              const stateCode = parts[1].substring(0, 2).toUpperCase()
+              if (validStates.includes(stateCode)) {
+                state = stateCode
+              }
+            } else if (parts.length === 1 && parts[0]) {
+              city = parts[0]
+            }
           }
         }
       })
 
+      // Work mode: <img src="...emoji-people.svg"> next sibling <span>
       let workMode: Job['workMode'] = 'PRESENCIAL'
-      const cardText = card.text()
-      if (cardText.includes('Remoto') || cardText.includes('Home Office')) workMode = 'REMOTO'
-      else if (cardText.includes('Híbrido') || cardText.includes('Hibrido')) workMode = 'HIBRIDO'
+      card.find('img').each((_, img) => {
+        const src = $(img).attr('src') || ''
+        if (src.includes('emoji-people')) {
+          const text = $(img).next('span').text().trim()
+          if (text.includes('Remoto') || text.toLowerCase().includes('home office')) workMode = 'REMOTO'
+          else if (text.includes('Híbrido') || text.includes('Hibrido')) workMode = 'HIBRIDO'
+        }
+      })
 
+      // Salary: <img src="...payments-outline.svg"> next sibling <h3>
       let salaryMin = 0
       let salaryMax = 0
-      const salaryMatch = cardText.match(/R\$\s*([\d.,]+)/g)
-      if (salaryMatch) {
-        const salaries = salaryMatch.map(s => {
-          const num = s.replace(/[R$\s.]/g, '').replace(',', '.')
-          return parseFloat(num) || 0
-        }).filter(n => n > 0)
-        if (salaries.length >= 2) {
-          salaryMin = Math.min(...salaries)
-          salaryMax = Math.max(...salaries)
-        } else if (salaries.length === 1) {
-          salaryMin = salaries[0]
-          salaryMax = salaries[0]
+      card.find('img').each((_, img) => {
+        const src = $(img).attr('src') || ''
+        if (src.includes('payments-outline')) {
+          const salaryText = $(img).next('h3').text().trim()
+          if (salaryText && !salaryText.toLowerCase().includes('combinar')) {
+            const vals = salaryText.match(/R\$\s*([\d.,]+)/g)
+            if (vals) {
+              const numbers = vals.map(v => {
+                return parseFloat(v.replace(/[R$\s.]/g, '').replace(',', '.')) || 0
+              }).filter(n => n > 0)
+              if (numbers.length >= 2) {
+                salaryMin = Math.min(...numbers)
+                salaryMax = Math.max(...numbers)
+              } else if (numbers.length === 1) {
+                salaryMin = numbers[0]
+                salaryMax = numbers[0]
+              }
+            }
+          }
         }
-      }
+      })
 
+      // Publication date
       let publishedAt = new Date().toISOString()
+      const cardText = card.text()
       const dateMatch = cardText.match(/Publicada?\s+(?:ha\s+)?(\d+)\s+(dia|horas?|minutos?)/i)
       if (dateMatch) {
         const num = parseInt(dateMatch[1])

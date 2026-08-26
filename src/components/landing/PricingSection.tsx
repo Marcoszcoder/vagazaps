@@ -20,30 +20,33 @@ export default function PricingSection() {
     'Experiência',
     'Alertas prioritários',
     'Maior personalização',
-    'Recursos futuros de análise de perfil',
   ]
 
   return (
-    <section id="planos" className="bg-slate-50 py-20">
+    <section id="planos" className="bg-white py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-[#1e293b] sm:text-4xl">
+          <span className="inline-block rounded-full bg-[#16a34a]/10 px-4 py-1.5 text-sm font-semibold text-[#16a34a]">
             Planos
+          </span>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight text-[#1e293b] sm:text-4xl lg:text-5xl">
+            Escolha o plano ideal
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
-            Escolha o plano ideal para acelerar sua busca por emprego.
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-500">
+            Comece grátis e evolua quando quiser.
           </p>
         </div>
 
-        <div className="mt-16 grid gap-8 lg:grid-cols-2">
-          <div className="relative rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+        <div className="mx-auto mt-16 grid max-w-4xl gap-8 lg:grid-cols-2">
+          <div className="relative rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition-all hover:shadow-md">
             <h3 className="text-xl font-bold text-[#1e293b]">
-              VagaZaps Essencial
+              Essencial
             </h3>
-            <div className="mt-4">
-              <span className="text-4xl font-bold text-[#1e293b]">
-                R$19,90
-              </span>
+            <p className="mt-1 text-sm text-slate-500">
+              Para quem está começando a buscar emprego.
+            </p>
+            <div className="mt-6">
+              <span className="text-4xl font-bold text-[#1e293b]">R$19,90</span>
               <span className="text-sm text-slate-500">/mês</span>
             </div>
             <ul className="mt-8 space-y-3">
@@ -71,25 +74,26 @@ export default function PricingSection() {
             </ul>
             <Link
               href="/cadastro"
-              className="mt-8 inline-flex w-full items-center justify-center rounded-lg border-2 border-[#16a34a] px-6 py-3 text-sm font-semibold text-[#16a34a] transition-colors hover:bg-[#16a34a] hover:text-white"
+              className="mt-8 inline-flex w-full items-center justify-center rounded-xl border-2 border-[#16a34a] px-6 py-3 text-sm font-semibold text-[#16a34a] transition-all hover:bg-[#16a34a] hover:text-white"
             >
               Começar agora
             </Link>
           </div>
 
-          <div className="relative rounded-2xl border-2 border-[#16a34a] bg-white p-8 shadow-lg ring-1 ring-[#16a34a]/20">
+          <div className="relative rounded-2xl border-2 border-[#16a34a] bg-white p-8 shadow-lg shadow-[#16a34a]/10 ring-1 ring-[#16a34a]/20">
             <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-              <span className="inline-block rounded-full bg-[#16a34a] px-4 py-1 text-xs font-bold uppercase tracking-wider text-white">
+              <span className="inline-block rounded-full bg-[#16a34a] px-4 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-sm">
                 Mais popular
               </span>
             </div>
             <h3 className="text-xl font-bold text-[#1e293b]">
-              VagaZaps Pro
+              Pro
             </h3>
-            <div className="mt-4">
-              <span className="text-4xl font-bold text-[#1e293b]">
-                R$35,50
-              </span>
+            <p className="mt-1 text-sm text-slate-500">
+              Para quem quer acesso ilimitado e mais controle.
+            </p>
+            <div className="mt-6">
+              <span className="text-4xl font-bold text-[#1e293b]">R$35,50</span>
               <span className="text-sm text-slate-500">/mês</span>
             </div>
             <ul className="mt-8 space-y-3">
@@ -117,7 +121,7 @@ export default function PricingSection() {
             </ul>
             <Link
               href="/cadastro"
-              className="mt-8 inline-flex w-full items-center justify-center rounded-lg bg-[#16a34a] px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#15803d]"
+              className="mt-8 inline-flex w-full items-center justify-center rounded-xl bg-[#16a34a] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#16a34a]/25 transition-all hover:bg-[#15803d] hover:shadow-[#16a34a]/40"
             >
               Quero o Pro
             </Link>

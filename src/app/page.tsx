@@ -3,6 +3,7 @@ import LandingNavbar from '@/components/landing/LandingNavbar'
 import HeroSection from '@/components/landing/HeroSection'
 import HowItWorks from '@/components/landing/HowItWorks'
 import BenefitsSection from '@/components/landing/BenefitsSection'
+import TestimonialsSection from '@/components/landing/TestimonialsSection'
 import PricingSection from '@/components/landing/PricingSection'
 import CtaSection from '@/components/landing/CtaSection'
 import Footer from '@/components/landing/Footer'
@@ -21,6 +22,7 @@ export default function HomePage() {
         <HeroSection />
         <HowItWorks />
         <BenefitsSection />
+        <TestimonialsSection />
         <PricingSection />
         <CtaSection />
       </main>

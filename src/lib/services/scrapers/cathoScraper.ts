@@ -70,31 +70,63 @@ export async function scrapeCatho(): Promise<Job[]> {
 
       const company = card.find('.mb-2 span.text-12').first().text().trim()
 
+      // City: <p> containing <span class="icon i_job_location">
       let city = ''
       let state = ''
       card.find('p').each((_, p) => {
-        const text = $(p).text()
-        if (text.includes('vaga') && text.includes('-')) {
-          const match = text.match(/-\s*(.+)$/)
-          if (match) {
-            city = match[1].trim()
+        const $p = $(p)
+        if ($p.find('span.icon.i_job_location').length > 0) {
+          const fullText = $p.text().trim()
+          // Format: "30 vagas - Fortaleza" or "1 vaga - São Paulo"
+          const dashMatch = fullText.match(/\s*-\s*(.+)$/)
+          if (dashMatch) {
+            const location = dashMatch[1].replace(/\+\s*\d+\s*cidade.*/, '').trim()
+            if (location) {
+              const parts = location.split('/').map(s => s.trim())
+              city = parts[0]
+              state = parts.length > 1 ? parts[parts.length - 1] : ''
+            }
           }
         }
       })
 
+      // Salary: <p> containing <span class="icon i_salary">
       let salaryMin = 0
       let salaryMax = 0
       card.find('p').each((_, p) => {
-        const text = $(p).text()
-        if (text.includes('R$')) {
-          const match = text.match(/R\$\s*([\d.,]+)/)
-          if (match) {
-            const val = parseFloat(match[1].replace(/\./g, '').replace(',', '.')) || 0
-            salaryMin = val
-            salaryMax = val
+        const $p = $(p)
+        if ($p.find('span.icon.i_salary').length > 0) {
+          const salaryText = $p.find('strong').first().text().trim()
+          if (salaryText && salaryText !== 'A Combinar') {
+            const cleaned = salaryText
+              .replace(/A partir de\s*/i, '')
+              .replace(/Até\s*/i, '')
+              .trim()
+            const vals = cleaned.match(/R\$\s*([\d.,]+)/g)
+            if (vals) {
+              const numbers = vals.map(v => {
+                return parseFloat(v.replace(/[R$\s.]/g, '').replace(',', '.')) || 0
+              }).filter(n => n > 0)
+              if (numbers.length >= 2) {
+                salaryMin = Math.min(...numbers)
+                salaryMax = Math.max(...numbers)
+              } else if (numbers.length === 1) {
+                salaryMin = numbers[0]
+                salaryMax = numbers[0]
+              }
+            }
           }
         }
       })
+
+      // Work mode: try to find Presencial/Remoto/Híbrido text
+      let workMode: Job['workMode'] = 'PRESENCIAL'
+      const cardText = card.text()
+      if (cardText.includes('Remoto') || cardText.includes('Home Office')) workMode = 'REMOTO'
+      else if (cardText.includes('Híbrido') || cardText.includes('Hibrido')) workMode = 'HIBRIDO'
+
+      // Contract type: try detail API fields
+      let contractType: Job['contractType'] = 'CLT'
 
       const sourceUrl = detailPath ? `${BASE_URL}${detailPath}` : `${BASE_URL}/vagas/`
 
@@ -108,8 +140,8 @@ export async function scrapeCatho(): Promise<Job[]> {
         state: state || 'NA',
         salaryMin,
         salaryMax,
-        workMode: 'PRESENCIAL',
-        contractType: 'CLT',
+        workMode,
+        contractType,
         experience: 'SEM_EXPERIENCIA',
         description: 'Descrição disponível no site original',
         requirements: [],

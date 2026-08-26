@@ -13,7 +13,7 @@ import Header from './Header'
 
 function MobileSidebarOverlay({ onClose }: { onClose: () => void }) {
   const pathname = usePathname()
-  const { user, logout } = useAuth()
+  const { logout } = useAuth()
 
   const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: '🏠' },
@@ -67,22 +67,6 @@ function MobileSidebarOverlay({ onClose }: { onClose: () => void }) {
                 </li>
               )
             })}
-            {user?.isAdmin && (
-              <li className="pt-2 mt-2 border-t border-gray-100">
-                <Link
-                  href="/admin"
-                  onClick={onClose}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    pathname.startsWith('/admin')
-                      ? 'bg-green-50 text-green-700'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  }`}
-                >
-                  <span className="text-lg">🛡️</span>
-                  <span>Admin</span>
-                </Link>
-              </li>
-            )}
             <li className="pt-2 mt-2 border-t border-gray-100">
               <button
                 onClick={() => { logout(); onClose(); }}

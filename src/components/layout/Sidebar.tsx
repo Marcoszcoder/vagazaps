@@ -61,21 +61,6 @@ export default function Sidebar() {
             )
           })}
 
-          {user?.isAdmin && (
-            <li className="pt-2 mt-2 border-t border-gray-100">
-              <Link
-                href="/admin"
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  pathname.startsWith('/admin')
-                    ? 'bg-green-50 text-green-700'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                }`}
-              >
-                <span className="text-lg min-w-[24px] text-center">🛡️</span>
-                {expanded && <span className="whitespace-nowrap">Admin</span>}
-              </Link>
-            </li>
-          )}
         </ul>
       </nav>
 
