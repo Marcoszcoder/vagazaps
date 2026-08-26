@@ -39,7 +39,7 @@ export default function LandingNavbar() {
         </div>
 
         {/* Mobile buttons */}
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center gap-4 md:hidden">
           <Link href="/login" className="text-base font-medium text-slate-500 transition-colors hover:text-slate-800">
             Entrar
           </Link>
