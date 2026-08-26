@@ -7,6 +7,9 @@ export default function HeroSection() {
     <section className="bg-white py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
+          <span className="inline-block rounded-full border border-[#16a34a]/30 bg-[#16a34a]/10 px-4 py-1 text-xs font-semibold tracking-wide text-[#16a34a]">
+            🤖 Robô automático
+          </span>
           <h1
             className="text-[32px] leading-[40px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[60px] lg:leading-[75px]"
             style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 800 }}
