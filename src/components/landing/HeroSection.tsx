@@ -268,7 +268,7 @@ export default function HeroSection() {
             </Link>
             <a
               href="#como-funciona"
-              className="hidden md:inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-base font-medium text-slate-500 transition-colors hover:text-slate-800"
+              className="inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-base font-medium text-slate-500 transition-colors hover:text-slate-800"
             >
               <span className="relative z-10">Ver como funciona</span>
             </a>
