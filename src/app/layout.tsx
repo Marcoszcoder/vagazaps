@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'VagaZaps',
   description: 'As vagas que combinam com você, direto no seu WhatsApp.',
+  icons: {
+    icon: '/iconezaps.png',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
