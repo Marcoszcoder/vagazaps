@@ -282,8 +282,8 @@ export default function HeroSection() {
           </div>
 
           {/* Left phone - jobs list */}
-          <div className="relative -rotate-6 scale-[0.7] -translate-y-4 z-0">
-            <div className="rounded-[2.5rem] bg-gradient-to-b from-slate-600 via-slate-700 to-slate-800 p-[2px] shadow-xl shadow-black/10 opacity-80">
+          <div className="relative z-0 scale-[0.85]">
+            <div className="rounded-[2.5rem] bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 p-[2px] shadow-xl shadow-black/10">
               <div className="rounded-[2.3rem] bg-slate-800 p-[2px]">
                 <div className="relative rounded-[2.1rem] overflow-hidden bg-[#111b21]">
                   <div className="absolute top-0 left-1/2 z-20 -translate-x-1/2 pt-2">
