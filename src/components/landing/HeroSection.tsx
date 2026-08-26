@@ -283,9 +283,9 @@ export default function HeroSection() {
 
           {/* Left phone - jobs list */}
           <div className="relative z-0 scale-[0.85] -mr-6">
-            <div className="rounded-[2.5rem] bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 p-[2px] shadow-xl shadow-black/10">
-              <div className="rounded-[2.3rem] bg-slate-800 p-[2px]">
-                <div className="relative rounded-[2.1rem] overflow-hidden bg-[#111b21]">
+            <div className="rounded-[1.5rem] bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 p-[2px] shadow-xl shadow-black/10">
+              <div className="rounded-[1.3rem] bg-slate-800 p-[2px]">
+                <div className="relative rounded-[1.1rem] overflow-hidden bg-[#111b21]">
                   <div className="absolute top-0 left-1/2 z-20 -translate-x-1/2 pt-2">
                     <div className="h-[8px] w-[40px] rounded-full bg-black" />
                   </div>
@@ -375,9 +375,9 @@ export default function HeroSection() {
 
           {/* Right phone - preferences */}
           <div className="relative z-0 scale-[0.85] -ml-6">
-            <div className="rounded-[2.5rem] bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 p-[2px] shadow-xl shadow-black/10">
-              <div className="rounded-[2.3rem] bg-slate-800 p-[2px]">
-                <div className="relative rounded-[2.1rem] overflow-hidden bg-[#111b21]">
+            <div className="rounded-[1.5rem] bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 p-[2px] shadow-xl shadow-black/10">
+              <div className="rounded-[1.3rem] bg-slate-800 p-[2px]">
+                <div className="relative rounded-[1.1rem] overflow-hidden bg-[#111b21]">
                   <div className="absolute top-0 left-1/2 z-20 -translate-x-1/2 pt-2">
                     <div className="h-[8px] w-[40px] rounded-full bg-black" />
                   </div>
