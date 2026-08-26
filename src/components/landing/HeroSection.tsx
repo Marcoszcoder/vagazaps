@@ -8,12 +8,12 @@ export default function HeroSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1
-            className="text-[32px] leading-[40px] tracking-tight text-black sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[60px] lg:leading-[75px]"
+            className="text-[32px] leading-[40px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[60px] lg:leading-[75px]"
             style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 800 }}
           >
-            Pare de <span className="text-[#dc2626]">perder</span> vagas
+            Pare de <span className="text-[#ef4444]">perder</span> vagas
             <br />
-            que poderiam mudar sua <span className="text-[#15803d]">vida</span>.
+            que poderiam mudar sua <span className="text-[#16a34a]">vida</span>.
           </h1>
           <p
             className="mx-auto mt-5 max-w-2xl lg:mx-auto"
