@@ -86,43 +86,12 @@ export default function HowItWorks() {
           </div>
         </div>
 
-        <div className="mt-16 rounded-2xl border border-slate-200/80 bg-white p-8 shadow-sm">
-          <div className="flex flex-col items-center justify-center gap-6">
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-6 py-3">
-                <span className="text-lg">🌐</span>
-                <span className="text-sm font-semibold text-slate-700">Empregos.com.br</span>
-              </div>
-              <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-6 py-3">
-                <span className="text-lg">💼</span>
-                <span className="text-sm font-semibold text-slate-700">Catho</span>
-              </div>
-              <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-6 py-3">
-                <span className="text-lg">🔗</span>
-                <span className="text-sm font-semibold text-slate-700">LinkedIn</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#16a34a]/30 to-transparent" />
-              <span className="text-sm font-semibold text-[#16a34a]">VagaZaps</span>
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#16a34a]/30 to-transparent" />
-            </div>
-            <div className="flex items-center gap-3 rounded-xl bg-[#16a34a]/10 px-6 py-3">
-              <span className="text-lg">📲</span>
-              <span className="text-sm font-semibold text-[#16a34a]">Seu WhatsApp</span>
-            </div>
-          </div>
-        </div>
-
         <div className="mt-12 text-center">
           <Link
             href="/cadastro"
-            className="inline-flex items-center gap-2 rounded-xl bg-[#16a34a] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-[#16a34a]/25 transition-all hover:bg-[#15803d] hover:shadow-[#16a34a]/40"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#22c55e] to-[#4ade80] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:shadow-[#22c55e]/30"
           >
             Começar agora
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
           </Link>
         </div>
       </div>

@@ -243,10 +243,10 @@ export default function HeroSection() {
             <span className="relative z-10">Robô automático</span>
           </span>
           <h1
-            className="text-[32px] leading-[40px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[51px] lg:leading-[64px]"
+            className="text-[32px] leading-[40px] tracking-tight text-[#0f172a] sm:text-[40px] sm:leading-[50px] md:text-[50px] md:leading-[62px] lg:text-[49px] lg:leading-[62px]"
             style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 800 }}
           >
-            Pare de <span className="text-[#ef4444]">perder</span> vagas
+            Pare de <span className="text-[#0f172a]">perder</span> vagas
             <br />
             que poderiam mudar sua <span className="text-[#16a34a]">vida</span>.
           </h1>
@@ -272,29 +272,14 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Device mockups */}
-        <div className="relative mt-16 flex items-end justify-center lg:gap-4">
-          {/* Decorative background */}
+        {/* Device mockups - Mobile: 3 phones */}
+        <div className="relative mt-16 flex items-end justify-center lg:hidden">
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="h-[300px] w-[300px] rounded-full bg-[#22c55e]/5 blur-3xl lg:h-[400px] lg:w-[400px]" />
-          </div>
-
-          {/* Floating badges */}
-          <div className="absolute top-1/2 right-[5%] pointer-events-none hidden lg:block z-10">
-            <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 shadow-sm">
-              <div className="h-2 w-2 rounded-full bg-[#22c55e] animate-pulse" />
-              <span className="text-[10px] font-medium text-slate-500">3 vagas hoje</span>
-            </div>
-          </div>
-          <div className="absolute top-1/3 left-[5%] pointer-events-none hidden lg:block z-10">
-            <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 shadow-sm">
-              <svg className="h-3 w-3 text-[#22c55e]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-              <span className="text-[10px] font-medium text-slate-500">92% match</span>
-            </div>
+            <div className="h-[300px] w-[300px] rounded-full bg-[#22c55e]/5 blur-3xl" />
           </div>
 
           {/* Left phone - jobs list */}
-          <div className="relative -rotate-6 scale-[0.7] -translate-y-4 z-0 hidden sm:block">
+          <div className="relative -rotate-6 scale-[0.7] -translate-y-4 z-0">
             <div className="rounded-[2.5rem] bg-gradient-to-b from-slate-600 via-slate-700 to-slate-800 p-[2px] shadow-xl shadow-black/10 opacity-80">
               <div className="rounded-[2.3rem] bg-slate-800 p-[2px]">
                 <div className="relative rounded-[2.1rem] overflow-hidden bg-[#111b21]">
@@ -323,11 +308,6 @@ export default function HeroSection() {
                       <p className="text-[6px] text-slate-400">São Paulo • R$ 3.800</p>
                       <div className="mt-1 h-1 rounded-full bg-[#22c55e]" style={{ width: '87%' }} />
                     </div>
-                    <div className="rounded-md bg-[#1d2e35] p-2">
-                      <p className="text-[7px] font-bold text-white">Suporte Técnico</p>
-                      <p className="text-[6px] text-slate-400">Remoto • R$ 4.200</p>
-                      <div className="mt-1 h-1 rounded-full bg-[#22c55e]" style={{ width: '80%' }} />
-                    </div>
                   </div>
                 </div>
               </div>
@@ -335,7 +315,7 @@ export default function HeroSection() {
           </div>
 
           {/* Center phone - WhatsApp */}
-          <div className="relative z-10 w-[180px] sm:w-[200px] lg:w-[220px]">
+          <div className="relative z-10 w-[180px] sm:w-[200px]">
             <div className="rounded-[2.5rem] bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 p-[3px] shadow-2xl shadow-black/25">
               <div className="rounded-[2.3rem] bg-slate-900 p-[2px]">
                 <div className="relative rounded-[2.1rem] overflow-hidden bg-[#111b21]">
@@ -350,8 +330,7 @@ export default function HeroSection() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 bg-[#1f2c34] px-3 py-2">
-                    <svg className="h-3 w-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
-                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-[#22c55e] to-[#16a34a] shadow-sm">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-[#22c55e] to-[#16a34a]">
                       <span className="text-[8px] font-bold text-white">VZ</span>
                     </div>
                     <div className="flex-1">
@@ -359,7 +338,7 @@ export default function HeroSection() {
                       <div className="text-[7px] text-[#22c55e]">● online</div>
                     </div>
                   </div>
-                  <div className="space-y-2 bg-[#0b141a] p-3 min-h-[240px]">
+                  <div className="space-y-2 bg-[#0b141a] p-3 min-h-[220px]">
                     <div className="text-center">
                       <span className="rounded-lg bg-[#182229] px-2 py-0.5 text-[6px] text-slate-400">HOJE</span>
                     </div>
@@ -386,21 +365,13 @@ export default function HeroSection() {
                       <div className="text-right text-[5px] text-blue-200">9:42 ✓✓</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 bg-[#1f2c34] px-2 py-1.5">
-                    <div className="flex-1 rounded-full bg-[#2a3942] px-2 py-1">
-                      <span className="text-[6px] text-slate-500">Mensagem...</span>
-                    </div>
-                    <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#22c55e]">
-                      <svg className="h-2.5 w-2.5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Right phone - notifications */}
-          <div className="relative rotate-6 scale-[0.7] -translate-y-4 z-0 hidden sm:block">
+          <div className="relative rotate-6 scale-[0.7] -translate-y-4 z-0">
             <div className="rounded-[2.5rem] bg-gradient-to-b from-slate-600 via-slate-700 to-slate-800 p-[2px] shadow-xl shadow-black/10 opacity-80">
               <div className="rounded-[2.3rem] bg-slate-800 p-[2px]">
                 <div className="relative rounded-[2.1rem] overflow-hidden bg-[#111b21]">
@@ -423,25 +394,38 @@ export default function HeroSection() {
                       <p className="text-[6px] font-bold text-[#22c55e]">NOVA VAGA</p>
                       <p className="text-[7px] font-bold text-white">Dev React</p>
                       <p className="text-[6px] text-slate-400">Remoto • R$ 7.000</p>
-                      <p className="text-[5px] text-slate-500">Há 5 minutos</p>
                     </div>
                     <div className="rounded-md bg-[#1d2e35] p-2 border-l-2 border-[#22c55e]">
                       <p className="text-[6px] font-bold text-[#22c55e]">NOVA VAGA</p>
                       <p className="text-[7px] font-bold text-white">UI Designer</p>
                       <p className="text-[6px] text-slate-400">São Paulo • R$ 5.500</p>
-                      <p className="text-[5px] text-slate-500">Há 12 minutos</p>
-                    </div>
-                    <div className="rounded-md bg-[#1d2e35] p-2 border-l-2 border-slate-600">
-                      <p className="text-[6px] font-bold text-slate-400">VAGA ENCERRADA</p>
-                      <p className="text-[7px] font-bold text-white">QA Analyst</p>
-                      <p className="text-[6px] text-slate-400">Campinas • R$ 4.000</p>
-                      <p className="text-[5px] text-slate-500">Há 1 hora</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Device mockups - Desktop: phone + laptop */}
+        <div className="relative mt-16 hidden items-end justify-center gap-6 lg:flex lg:gap-10">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="h-[400px] w-[400px] rounded-full bg-[#22c55e]/5 blur-3xl" />
+          </div>
+          <div className="absolute top-1/2 right-[5%] pointer-events-none z-10">
+            <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 shadow-sm">
+              <div className="h-2 w-2 rounded-full bg-[#22c55e] animate-pulse" />
+              <span className="text-[10px] font-medium text-slate-500">3 vagas hoje</span>
+            </div>
+          </div>
+          <div className="absolute top-1/3 left-[5%] pointer-events-none z-10">
+            <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 shadow-sm">
+              <svg className="h-3 w-3 text-[#22c55e]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span className="text-[10px] font-medium text-slate-500">92% match</span>
+            </div>
+          </div>
+          <PhoneMockup />
+          <LaptopMockup />
         </div>
       </div>
     </section>
