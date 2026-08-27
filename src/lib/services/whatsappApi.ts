@@ -1,4 +1,4 @@
-const WHATSAPP_API = process.env.NEXT_PUBLIC_WHATSAPP_API || 'https://vagazaps-whatsapp.onrender.com'
+const WHATSAPP_API = process.env.NEXT_PUBLIC_WHATSAPP_API || 'https://nodejs-production-5edf4.up.railway.app'
 
 export async function sendWhatsAppMessage(phone: string, message: string): Promise<{ success: boolean; messageId?: string; error?: string }> {
   try {

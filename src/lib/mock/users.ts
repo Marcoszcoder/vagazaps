@@ -8,7 +8,7 @@ const users: User[] = [
     id: 'user-001',
     name: 'Adiel Marcos',
     email: 'adielmarcos@gmail.com',
-    phone: '(66) 99207-9746',
+    phone: '5566992079746',
     city: 'Rondonópolis',
     state: 'MT',
     plan: 'PRO',
@@ -20,7 +20,7 @@ const users: User[] = [
     id: 'user-002',
     name: 'Mariana Oliveira',
     email: 'mariana.oliveira@email.com',
-    phone: '(65) 98888-5678',
+    phone: '5565988885678',
     city: 'Cuiabá',
     state: 'MT',
     plan: 'ESSENTIAL',
@@ -32,7 +32,7 @@ const users: User[] = [
     id: 'user-003',
     name: 'Carlos Eduardo Silva',
     email: 'carlos.silva@email.com',
-    phone: '(67) 97777-9012',
+    phone: '5567977779012',
     city: 'Campo Grande',
     state: 'MS',
     plan: 'FREE',
@@ -55,7 +55,7 @@ const users: User[] = [
     id: 'user-005',
     name: 'Roberto Nascimento',
     email: 'roberto.nascimento@email.com',
-    phone: '(66) 96666-3456',
+    phone: '5566966663456',
     city: 'Primavera do Leste',
     state: 'MT',
     plan: 'ESSENTIAL',
@@ -67,7 +67,7 @@ const users: User[] = [
     id: 'user-006',
     name: 'Ana Paula Ferreira',
     email: 'ana.ferreira@email.com',
-    phone: '(66) 95555-7890',
+    phone: '5566955557890',
     city: 'Sorriso',
     state: 'MT',
     plan: 'FREE',
@@ -98,10 +98,17 @@ export function storeUserPhone(userId: string, phone: string) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(phones))
 }
 
+export function normalizePhone(phone: string): string {
+  const digits = phone.replace(/\D/g, '')
+  if (!digits) return ''
+  if (digits.startsWith('55')) return digits
+  return '55' + digits
+}
+
 export function getAllUsers(): User[] {
   const phones = getStoredPhones()
   return users.map(u => ({
     ...u,
-    phone: phones[u.id] || u.phone,
+    phone: normalizePhone(phones[u.id] || u.phone || ''),
   }))
 }
